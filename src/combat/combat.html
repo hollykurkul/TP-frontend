@@ -4,56 +4,66 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Pawdessey Combat</title>
-    <link rel="stylesheet" href="combat.css" />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="combat-page">
       <section class="combat-header">
+        <a class="back-link" href="index.html">Back to menu</a>
         <p class="eyebrow">Combat encounter</p>
-        <h1>Enemy</h1>
+        <h1>The Pawdessey</h1>
       </section>
 
       <section class="combat-arena">
         <article class="fighter-card">
           <div class="avatar-frame">
-            <span>Player Avatar</span>
+            <img id="playerAvatar" class="avatar-image" alt="" />
+            <span id="playerAvatarLabel">Player Avatar</span>
           </div>
 
-          <h2>Adventurer</h2>
+          <h2 id="playerName">Adventurer</h2>
 
-          <div class="heart-bar" aria-label="Player health 3 out of 3">
-            <span class="heart full"></span>
-            <span class="heart full"></span>
-            <span class="heart full"></span>
-          </div>
+          <div
+            id="playerHearts"
+            class="heart-bar"
+            aria-label="Player health"
+          ></div>
         </article>
 
         <div class="versus">VS</div>
 
         <article class="fighter-card enemy-card">
           <div class="avatar-frame">
-            <span>Enemy Avatar</span>
+            <img id="enemyAvatar" class="avatar-image" alt="" />
+            <span id="enemyAvatarLabel">Enemy Avatar</span>
           </div>
 
-          <h2>Forest Rival</h2>
+          <h2 id="enemyName">Waiting...</h2>
 
-          <div class="heart-bar" aria-label="Enemy health 2 out of 3">
-            <span class="heart full"></span>
-            <span class="heart full"></span>
-            <span class="heart empty"></span>
-          </div>
+          <div
+            id="enemyHearts"
+            class="heart-bar"
+            aria-label="Enemy health"
+          ></div>
         </article>
       </section>
 
       <section class="combat-log">
-        <p>The path narrows. Your opponent blocks the way.</p>
+        <p id="combatMessage">Loading combat encounter...</p>
       </section>
 
       <section class="combat-actions">
-        <button type="button">Attack</button>
-        <button type="button" class="secondary-button">Block</button>
-        <button type="button" class="danger-button">Flee</button>
+        <button id="attackButton" type="button">Attack</button>
+        <button id="blockButton" class="secondary-button" type="button">
+          Block
+        </button>
+        <button id="fleeButton" class="danger-button" type="button">
+          Flee
+        </button>
       </section>
     </main>
+
+    <script src="api.js"></script>
+    <script src="combat.js"></script>
   </body>
 </html>
