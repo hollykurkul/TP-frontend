@@ -1,0 +1,180 @@
+/* src/game/BusStop.css */
+
+.busstop-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #2c3a2f;
+}
+
+/* --- The bus stop scene --- */
+.busstop-scene {
+  position: relative;
+  height: 260px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(
+    #f4e9d4 0%,
+    /* pale storybook sky */ #ead9b8 55%,
+    #b5a877 56%,
+    /* dry grass line */ #8f8557 100% /* dusty ground */
+  );
+  box-shadow: 0 4px 16px rgba(44, 58, 47, 0.25);
+}
+
+/* Shelter: roof, posts, bench */
+.shelter-roof {
+  position: absolute;
+  left: 18%;
+  top: 22%;
+  width: 200px;
+  height: 14px;
+  background: #6b4a3a;
+  border-radius: 4px;
+  box-shadow: 0 2px 0 #543a2e;
+}
+.shelter-post {
+  position: absolute;
+  width: 8px;
+  height: 130px;
+  top: calc(22% + 14px);
+  background: #6b4a3a;
+}
+.shelter-post.left {
+  left: calc(18% + 8px);
+}
+.shelter-post.right {
+  left: calc(18% + 184px);
+}
+.shelter-bench {
+  position: absolute;
+  left: calc(18% + 30px);
+  top: 62%;
+  width: 140px;
+  height: 10px;
+  background: #8a6a52;
+  border-radius: 3px;
+}
+.shelter-bench::before,
+.shelter-bench::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  width: 8px;
+  height: 28px;
+  background: #6b4a3a;
+}
+.shelter-bench::before {
+  left: 10px;
+}
+.shelter-bench::after {
+  right: 10px;
+}
+
+/* Sign with pawprints instead of route numbers */
+.stop-sign {
+  position: absolute;
+  right: 14%;
+  top: 18%;
+  width: 74px;
+  text-align: center;
+}
+.stop-sign .sign-face {
+  background: #f4e9d4;
+  border: 3px solid #4f7d78;
+  border-radius: 10px;
+  padding: 8px 4px;
+  font-size: 16px;
+  letter-spacing: 2px;
+  animation: creak 5s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+.stop-sign .sign-pole {
+  width: 6px;
+  height: 110px;
+  margin: 0 auto;
+  background: #4f7d78;
+}
+
+@keyframes creak {
+  from {
+    transform: rotate(-1.5deg);
+  }
+  to {
+    transform: rotate(1.5deg);
+  }
+}
+
+/* Drifting clouds */
+.cloud {
+  position: absolute;
+  width: 70px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 20px;
+  animation: drift 30s linear infinite;
+}
+.cloud.two {
+  top: 14%;
+  transform: scale(0.6);
+  animation-duration: 42s;
+  animation-delay: -18s;
+}
+.cloud.one {
+  top: 6%;
+}
+
+@keyframes drift {
+  from {
+    left: -80px;
+  }
+  to {
+    left: 105%;
+  }
+}
+
+/* --- Text + choices --- */
+.busstop-text {
+  margin-top: 20px;
+}
+.busstop-text .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: #6b7d6e;
+  margin-bottom: 4px;
+}
+.busstop-text h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+.busstop-text p {
+  line-height: 1.6;
+  font-size: 17px;
+}
+
+.busstop-choices {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.busstop-button {
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  padding: 12px 18px;
+  border: 2px solid #8a6a52;
+  border-radius: 10px;
+  background: #f4e9d4;
+  color: #2c3a2f;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.busstop-button:hover {
+  background: #ead9b8;
+  transform: translateX(4px);
+}

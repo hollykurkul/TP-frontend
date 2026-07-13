@@ -1,0 +1,200 @@
+/* src/game/Pond.css */
+
+.pond-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #2c3a2f;
+}
+
+/* --- The pond scene --- */
+.pond-scene {
+  position: relative;
+  height: 260px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(
+    #f4e9d4 0%,
+    /* storybook sky */ #e8dcc0 45%,
+    #7fa8a0 46%,
+    /* waterline */ #4f7d78 100% /* deep water */
+  );
+  box-shadow: 0 4px 16px rgba(44, 58, 47, 0.25);
+}
+
+.ripple {
+  position: absolute;
+  border: 2px solid rgba(244, 233, 212, 0.5);
+  border-radius: 50%;
+  animation: ripple 4s ease-out infinite;
+}
+.ripple:nth-child(1) {
+  left: 30%;
+  top: 65%;
+  animation-delay: 0s;
+}
+.ripple:nth-child(2) {
+  left: 62%;
+  top: 75%;
+  animation-delay: 1.3s;
+}
+.ripple:nth-child(3) {
+  left: 48%;
+  top: 58%;
+  animation-delay: 2.6s;
+}
+
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
+    margin: 0;
+  }
+  100% {
+    width: 120px;
+    height: 44px;
+    opacity: 0;
+    margin: -22px 0 0 -60px;
+  }
+}
+
+.lilypad {
+  position: absolute;
+  width: 64px;
+  height: 24px;
+  background: #5c8a4e;
+  border-radius: 50%;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    55% 100%,
+    45% 40%,
+    35% 100%,
+    0 100%
+  );
+}
+.lilypad.one {
+  left: 12%;
+  top: 70%;
+}
+.lilypad.two {
+  left: 74%;
+  top: 60%;
+  transform: scale(0.7);
+}
+
+.reeds-cluster {
+  position: absolute;
+  right: 4%;
+  bottom: 0;
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+}
+.reed {
+  width: 5px;
+  background: #3f6b3a;
+  border-radius: 3px 3px 0 0;
+  transform-origin: bottom center;
+  animation: sway 3.5s ease-in-out infinite alternate;
+}
+.reed:nth-child(1) {
+  height: 90px;
+}
+.reed:nth-child(2) {
+  height: 120px;
+  animation-delay: 0.4s;
+}
+.reed:nth-child(3) {
+  height: 75px;
+  animation-delay: 0.8s;
+}
+.reed:nth-child(4) {
+  height: 105px;
+  animation-delay: 1.2s;
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-3deg);
+  }
+  to {
+    transform: rotate(4deg);
+  }
+}
+
+.dragonfly {
+  position: absolute;
+  animation: flit 9s ease-in-out infinite;
+}
+
+@keyframes flit {
+  0% {
+    left: 15%;
+    top: 30%;
+  }
+  25% {
+    left: 55%;
+    top: 18%;
+  }
+  50% {
+    left: 78%;
+    top: 35%;
+  }
+  75% {
+    left: 40%;
+    top: 25%;
+  }
+  100% {
+    left: 15%;
+    top: 30%;
+  }
+}
+
+/* --- Text + choices --- */
+.pond-text {
+  margin-top: 20px;
+}
+.pond-text .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: #6b7d6e;
+  margin-bottom: 4px;
+}
+.pond-text h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+.pond-text p {
+  line-height: 1.6;
+  font-size: 17px;
+}
+
+.pond-choices {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pond-button {
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  padding: 12px 18px;
+  border: 2px solid #4f7d78;
+  border-radius: 10px;
+  background: #f4e9d4;
+  color: #2c3a2f;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.pond-button:hover {
+  background: #e8dcc0;
+  transform: translateX(4px);
+}
