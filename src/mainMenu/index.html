@@ -17,7 +17,7 @@
       </section>
 
       <section class="menu-grid">
-        <section class="menu-panel auth-panel">
+        <section id="auth-container" class="menu-panel auth-panel">
           <h2>Log In</h2>
 
           <form id="loginForm">
@@ -71,7 +71,7 @@
           </form>
         </section>
 
-        <section class="menu-panel action-panel">
+        <section id="new-game-container" class="menu-panel action-panel hidden">
           <h2>New Game</h2>
           <p>Begin a fresh adventure from the first trail marker.</p>
 
@@ -80,7 +80,10 @@
           </button>
         </section>
 
-        <section class="menu-panel action-panel">
+        <section
+          id="load-game-container"
+          class="menu-panel action-panel hidden"
+        >
           <h2>Load Game</h2>
           <p>Return to a saved adventure.</p>
 
