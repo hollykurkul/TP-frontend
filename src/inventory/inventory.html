@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Pawdessey Inventory</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="inventory-page">
+      <section class="inventory-header">
+        <a class="back-link" href="index.html">Back to menu</a>
+        <p class="eyebrow">Satchel</p>
+        <h1>Inventory</h1>
+        <p class="subtitle">
+          Your satchel, keeper of your items. Items found on the journey can be
+          added here and inspected later.
+        </p>
+      </section>
+
+      <section class="inventory-layout">
+        <section class="inventory-panel">
+          <div class="panel-heading">
+            <h2>Items</h2>
+            <span id="itemCount">0 items</span>
+          </div>
+
+          <div
+            id="inventoryList"
+            class="inventory-list"
+            aria-label="Inventory item list"
+          ></div>
+        </section>
+
+        <aside class="item-detail-panel">
+          <div class="item-art-frame">
+            <img id="detailImage" class="item-art-image" alt="" />
+            <span id="detailImageLabel">Select an item</span>
+          </div>
+
+          <div class="item-detail-copy">
+            <p id="detailType" class="item-type">No item selected</p>
+            <h2 id="detailName">Your satchel waits.</h2>
+            <p id="detailDescription">
+              Click any item in your inventory to see its story, stats, and
+              available actions.
+            </p>
+
+            <dl class="item-stats">
+              <div>
+                <dt>Effect</dt>
+                <dd id="detailEffect">-</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd id="detailStatus">-</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="inventory-actions">
+            <button id="equipButton" type="button" disabled>Equip Item</button>
+            <button
+              id="useButton"
+              class="secondary-button"
+              type="button"
+              disabled
+            >
+              Use Item
+            </button>
+            <button
+              id="trashButton"
+              class="danger-button"
+              type="button"
+              disabled
+            >
+              Trash Item
+            </button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="found-panel">
+        <div class="panel-heading">
+          <h2>Found Elsewhere Demo</h2>
+          <span>Prototype controls</span>
+        </div>
+        <p>
+          These buttons stand in for rewards from story scenes, combat drops, or
+          treasure spots.
+        </p>
+        <div id="foundItemsList" class="found-items-list"></div>
+      </section>
+
+      <p id="inventoryMessage" class="status-message" aria-live="polite"></p>
+    </main>
+
+    <script src="inventory.js"></script>
+  </body>
+</html>
