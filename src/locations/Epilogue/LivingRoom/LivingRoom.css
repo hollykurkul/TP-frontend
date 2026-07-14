@@ -1,0 +1,324 @@
+.living-room {
+  position: relative;
+  max-width: 720px;
+  min-height: 640px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #2b2118 0%, #3a2c1f 55%, #453425 100%);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.living-room-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.lr-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 68%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 60px,
+      rgba(255, 220, 170, 0.05) 60px 64px
+    ),
+    #4a3728;
+}
+
+.lr-floor {
+  position: absolute;
+  top: 68%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 90px,
+      rgba(0, 0, 0, 0.25) 90px 92px
+    ),
+    linear-gradient(180deg, #5c4530, #4a3625);
+}
+
+.lr-window {
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  width: 150px;
+  height: 190px;
+  border: 8px solid #6b5138;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.lr-window-pane {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0d1226 0%, #1a2140 100%);
+}
+.lr-moon {
+  position: absolute;
+  top: 24px;
+  right: 26px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #f0ead3;
+  box-shadow: 0 0 18px rgba(240, 234, 211, 0.6);
+}
+.lr-window-cross-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 6px;
+  margin-left: -3px;
+  background: #6b5138;
+}
+.lr-window-cross-h {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 6px;
+  margin-top: -3px;
+  background: #6b5138;
+}
+
+.lr-curtain {
+  position: absolute;
+  top: 48px;
+  width: 34px;
+  height: 214px;
+  background: #7a3b2e;
+  border-radius: 0 0 40% 40%;
+  box-shadow: inset -6px 0 10px rgba(0, 0, 0, 0.3);
+}
+.lr-curtain-left {
+  left: 44px;
+}
+.lr-curtain-right {
+  left: 200px;
+}
+
+.lr-picture-frame {
+  position: absolute;
+  top: 70px;
+  right: 250px;
+  width: 70px;
+  height: 54px;
+  background: #2f4636;
+  border: 6px solid #6b5138;
+  border-radius: 2px;
+}
+
+.lr-tv {
+  position: absolute;
+  top: 150px;
+  right: 60px;
+  width: 150px;
+  height: 130px;
+}
+.lr-tv-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 92px;
+  background: #10131f;
+  border: 6px solid #26232e;
+  border-radius: 6px;
+  box-shadow: inset 0 0 26px rgba(90, 120, 200, 0.25);
+}
+.lr-tv-stand {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 10px;
+  border-radius: 5px;
+  background: #26232e;
+}
+
+.lr-lamp {
+  position: absolute;
+  bottom: 27%;
+  right: 230px;
+  width: 90px;
+  height: 220px;
+}
+.lr-lamp-shade {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  width: 60px;
+  height: 44px;
+  background: #d9a05b;
+  clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+}
+.lr-lamp-glow {
+  position: absolute;
+  top: 44px;
+  left: -25px;
+  width: 140px;
+  height: 160px;
+  background: radial-gradient(
+    ellipse at top,
+    rgba(255, 200, 120, 0.22),
+    transparent 70%
+  );
+}
+.lr-lamp-pole {
+  position: absolute;
+  top: 44px;
+  left: 50%;
+  width: 5px;
+  height: 150px;
+  margin-left: -2.5px;
+  background: #6b5138;
+}
+.lr-lamp-base {
+  position: absolute;
+  bottom: 0;
+  left: 22px;
+  width: 46px;
+  height: 10px;
+  border-radius: 5px;
+  background: #6b5138;
+}
+
+.lr-sofa {
+  position: absolute;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-58%);
+  width: 260px;
+  height: 120px;
+}
+.lr-sofa-back {
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: 70px;
+  background: #79483a;
+  border-radius: 12px 12px 0 0;
+}
+.lr-sofa-seat {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 58px;
+  background: #8a5443;
+  border-radius: 10px;
+  box-shadow: inset 0 -12px 18px rgba(0, 0, 0, 0.3);
+}
+.lr-sofa-arm {
+  position: absolute;
+  bottom: 0;
+  width: 34px;
+  height: 84px;
+  background: #79483a;
+  border-radius: 12px 12px 4px 4px;
+}
+.lr-sofa-arm-left {
+  left: -6px;
+}
+.lr-sofa-arm-right {
+  right: -6px;
+}
+
+.lr-cushion {
+  position: absolute;
+  top: 28px;
+  width: 62px;
+  height: 40px;
+  background: #a3684f;
+  border-radius: 8px;
+}
+.lr-cushion-one {
+  left: 46px;
+}
+.lr-cushion-two {
+  left: 130px;
+  transform: rotate(6deg);
+}
+
+.lr-rug {
+  position: absolute;
+  bottom: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 340px;
+  height: 64px;
+  border-radius: 50%;
+  background: #6e3f4a;
+  box-shadow: inset 0 0 0 8px rgba(0, 0, 0, 0.15);
+  opacity: 0.85;
+}
+
+.lr-pet-bed {
+  position: absolute;
+  bottom: 9%;
+  left: 56px;
+  width: 110px;
+  height: 44px;
+  background: #5a6e52;
+  border-radius: 50% 50% 12px 12px / 80% 80% 12px 12px;
+  box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+.lr-pet-bed-cushion {
+  position: absolute;
+  bottom: 6px;
+  left: 12px;
+  right: 12px;
+  height: 18px;
+  border-radius: 50%;
+  background: #d9c9a3;
+}
+
+.lr-toy-ball {
+  position: absolute;
+  bottom: 9%;
+  right: 130px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #b0453a 0 25%,
+    #d9a05b 25% 50%,
+    #b0453a 50% 75%,
+    #d9a05b 75%
+  );
+  box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 480px) {
+  .lr-window {
+    left: 24px;
+    width: 120px;
+  }
+  .lr-curtain-left {
+    left: 10px;
+  }
+  .lr-curtain-right {
+    left: 152px;
+  }
+  .lr-tv {
+    right: 16px;
+    width: 120px;
+  }
+  .lr-lamp {
+    right: 160px;
+  }
+  .lr-picture-frame {
+    right: 170px;
+  }
+}

@@ -1,0 +1,218 @@
+/* src/game/Ditch.css */
+
+.ditch-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #2c3a2f;
+}
+
+.ditch-scene {
+  position: relative;
+  height: 260px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(
+    #d9cba8 0%,
+    /* overcast light */ #c9b98a 30%,
+    #7a6a4d 31%,
+    /* ditch bank */ #4a3f2e 100% /* muddy bottom */
+  );
+  box-shadow: 0 4px 16px rgba(44, 58, 47, 0.3);
+}
+
+/* Strip of road visible at the top */
+.road-edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 18%;
+  background: #6e6a63;
+  border-bottom: 6px solid #c9b98a;
+}
+
+/* The hollow of the ditch */
+.ditch-hollow {
+  position: absolute;
+  left: -6%;
+  right: -6%;
+  bottom: -20%;
+  height: 55%;
+  background: radial-gradient(
+    ellipse at center top,
+    #3a3226 0%,
+    #4a3f2e 60%,
+    transparent 100%
+  );
+}
+
+/* Culvert pipe with watching eyes */
+.culvert {
+  position: absolute;
+  right: 14%;
+  top: 42%;
+  width: 96px;
+  height: 78px;
+  background: #55504a;
+  border: 5px solid #6e6a63;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.culvert::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  background: #17130e;
+  border-radius: 50%;
+}
+.glint {
+  position: absolute;
+  top: 46%;
+  width: 10px;
+  height: 6px;
+  background: #f0c33c;
+  border-radius: 50%;
+  z-index: 1;
+  animation: watchful 6s linear infinite;
+}
+.glint.left {
+  left: 30%;
+}
+.glint.right {
+  left: 52%;
+}
+
+@keyframes watchful {
+  0%,
+  70%,
+  100% {
+    opacity: 1;
+    height: 6px;
+  }
+  74% {
+    opacity: 1;
+    height: 1px;
+  }
+  78% {
+    opacity: 1;
+    height: 6px;
+  }
+  40% {
+    transform: translateX(4px);
+  }
+}
+
+/* Roadside weeds */
+.weed {
+  position: absolute;
+  width: 5px;
+  background: #7a8a4e;
+  border-radius: 3px 3px 0 0;
+  transform-origin: bottom center;
+  animation: weedsway 4s ease-in-out infinite alternate;
+}
+.weed.one {
+  left: 10%;
+  top: 30%;
+  height: 60px;
+}
+.weed.two {
+  left: 16%;
+  top: 34%;
+  height: 44px;
+  animation-delay: 0.7s;
+}
+.weed.three {
+  left: 30%;
+  top: 38%;
+  height: 52px;
+  animation-delay: 1.4s;
+}
+
+@keyframes weedsway {
+  from {
+    transform: rotate(-4deg);
+  }
+  to {
+    transform: rotate(5deg);
+  }
+}
+
+/* A lost bottle catching the light */
+.bottle {
+  position: absolute;
+  left: 42%;
+  bottom: 16%;
+  width: 30px;
+  height: 12px;
+  background: #7fa8a0;
+  border-radius: 6px;
+  opacity: 0.7;
+  animation: bottleglint 5s ease-in-out infinite;
+}
+
+@keyframes bottleglint {
+  0%,
+  90%,
+  100% {
+    opacity: 0.7;
+  }
+  95% {
+    opacity: 1;
+    box-shadow: 0 0 8px 2px rgba(244, 233, 212, 0.5);
+  }
+}
+
+/* --- Text + choices --- */
+.ditch-text {
+  margin-top: 20px;
+}
+.ditch-text .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: #6b7d6e;
+  margin-bottom: 4px;
+}
+.ditch-text h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+.ditch-text p {
+  line-height: 1.6;
+  font-size: 17px;
+}
+
+.ditch-choices {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ditch-button {
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  padding: 12px 18px;
+  border: 2px solid #7a6a4d;
+  border-radius: 10px;
+  background: #f4e9d4;
+  color: #2c3a2f;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.ditch-button:hover {
+  background: #ead9b8;
+  transform: translateX(4px);
+}
+.ditch-button.danger {
+  border-color: #993c1d;
+  color: #712b13;
+}
+.ditch-button.danger:hover {
+  background: #f5c4b3;
+}
