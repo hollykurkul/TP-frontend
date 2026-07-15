@@ -70,6 +70,16 @@ h2 {
   align-items: stretch;
 }
 
+.menu-grid:has(.hidden) {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-grid:has(.hidden) .menu-panel {
+  width: 100%;
+  max-width: 460px;
+}
+
 .menu-panel,
 .fighter-card,
 .combat-log {
@@ -313,4 +323,8 @@ button:hover:not(:disabled),
   .avatar-frame {
     min-height: 160px;
   }
+}
+
+.hidden {
+  display: none !important;
 }

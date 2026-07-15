@@ -1,0 +1,249 @@
+.house {
+  position: relative;
+  max-width: 720px;
+  min-height: 640px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0a0e22 0%, #141a38 55%, #232946 100%);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.house-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #e8e6df;
+  opacity: 0.8;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.moon {
+  position: absolute;
+  top: 44px;
+  right: 70px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #f0ead3;
+  box-shadow: 0 0 26px rgba(240, 234, 211, 0.5);
+}
+
+.ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(180deg, #1c2b1e, #152015);
+}
+
+.house-body {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 230px;
+  background: #4a3b52;
+  box-shadow: inset 0 -30px 40px rgba(0, 0, 0, 0.4);
+}
+
+.roof {
+  position: absolute;
+  bottom: 350px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 210px solid transparent;
+  border-right: 210px solid transparent;
+  border-bottom: 110px solid #2e2438;
+}
+
+.chimney {
+  position: absolute;
+  bottom: 400px;
+  left: 50%;
+  margin-left: 90px;
+  width: 34px;
+  height: 70px;
+  background: #2e2438;
+}
+
+.win {
+  position: absolute;
+  width: 70px;
+  height: 64px;
+  background: #ffd98a;
+  border: 6px solid #2e2438;
+  border-radius: 3px;
+  box-shadow: 0 0 18px rgba(255, 217, 138, 0.45);
+}
+.win-left {
+  bottom: 230px;
+  left: 50%;
+  margin-left: -150px;
+}
+.win-right {
+  bottom: 230px;
+  left: 50%;
+  margin-left: 78px;
+}
+
+.win-bar-v {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 5px;
+  margin-left: -2.5px;
+  background: #2e2438;
+}
+.win-bar-h {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 5px;
+  margin-top: -2.5px;
+  background: #2e2438;
+}
+
+.door {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 120px;
+  background: #7a3b2e;
+  border: 5px solid #2e2438;
+  border-radius: 6px 6px 0 0;
+}
+.doorknob {
+  position: absolute;
+  top: 56px;
+  right: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d9a05b;
+}
+.pet-flap {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 34px;
+  background: #4a2419;
+  border: 3px solid #2e2438;
+  border-radius: 5px 5px 0 0;
+}
+
+.porch-light {
+  position: absolute;
+  bottom: 252px;
+  left: 50%;
+  margin-left: -58px;
+  width: 12px;
+  height: 16px;
+  background: #ffd98a;
+  border: 3px solid #2e2438;
+  border-radius: 3px;
+  box-shadow: 0 0 16px rgba(255, 217, 138, 0.6);
+}
+.porch-glow {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  margin-left: -115px;
+  width: 120px;
+  height: 140px;
+  background: radial-gradient(
+    ellipse at top,
+    rgba(255, 217, 138, 0.14),
+    transparent 70%
+  );
+}
+
+.path {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) perspective(200px) rotateX(40deg);
+  width: 110px;
+  height: 130px;
+  background: repeating-linear-gradient(
+    0deg,
+    #5f5e5a 0 18px,
+    #4c4b47 18px 36px
+  );
+  border-radius: 6px;
+}
+
+.fence-post {
+  position: absolute;
+  bottom: 100px;
+  width: 14px;
+  height: 56px;
+  background: #3d3a45;
+  border-radius: 3px 3px 0 0;
+}
+.fence-rail {
+  position: absolute;
+  bottom: 128px;
+  height: 8px;
+  background: #3d3a45;
+}
+
+.bush {
+  position: absolute;
+  bottom: 104px;
+  width: 74px;
+  height: 44px;
+  border-radius: 50% 50% 8px 8px;
+  background: #2f4636;
+}
+.bush-small {
+  width: 56px;
+  height: 34px;
+}
+
+@media (max-width: 480px) {
+  .house-body {
+    width: 280px;
+  }
+  .roof {
+    border-left-width: 165px;
+    border-right-width: 165px;
+  }
+  .win-left {
+    margin-left: -115px;
+  }
+  .win-right {
+    margin-left: 48px;
+  }
+  .chimney {
+    margin-left: 65px;
+  }
+}

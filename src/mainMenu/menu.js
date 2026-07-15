@@ -7,6 +7,14 @@ const menuMessage = document.getElementById("menuMessage");
 
 let selectedSaveId = null;
 
+function showGamePanels() {
+  document.getElementById("auth-container").parentElement.style.maxWidth =
+    "980px";
+  document.getElementById("auth-container").classList.add("hidden");
+  document.getElementById("new-game-container").classList.remove("hidden");
+  document.getElementById("load-game-container").classList.remove("hidden");
+}
+
 function setMenuMessage(message) {
   menuMessage.textContent = message;
 }
@@ -76,6 +84,7 @@ loginForm.addEventListener("submit", async (event) => {
     window.PawdesseyApi.setToken(result.token);
     setMenuMessage("Logged in. Saved games loaded.");
     await refreshSaves();
+    showGamePanels();
   } catch (error) {
     setMenuMessage(error.message);
   }
@@ -90,6 +99,7 @@ registerForm.addEventListener("submit", async (event) => {
     window.PawdesseyApi.setToken(result.token);
     setMenuMessage("Account created. You can start a new game.");
     await refreshSaves();
+    showGamePanels();
   } catch (error) {
     setMenuMessage(error.message);
   }
@@ -115,4 +125,5 @@ loadGameButton.addEventListener("click", () => {
 
 if (window.PawdesseyApi.getToken()) {
   refreshSaves();
+  showGamePanels();
 }

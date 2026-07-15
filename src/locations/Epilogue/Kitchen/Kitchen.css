@@ -1,0 +1,322 @@
+.kitchen {
+  position: relative;
+  max-width: 720px;
+  min-height: 640px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #2b2118 0%, #3a2c1f 55%, #453425 100%);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.kitchen-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.kitchen-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 46px,
+      rgba(0, 0, 0, 0.12) 46px 48px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 46px,
+      rgba(0, 0, 0, 0.12) 46px 48px
+    ),
+    #55483a;
+}
+
+.kitchen-floor {
+  position: absolute;
+  top: 64%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 60px,
+      rgba(0, 0, 0, 0.18) 60px 62px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 60px,
+      rgba(0, 0, 0, 0.18) 60px 62px
+    ),
+    #4a3625;
+}
+
+.kitchen-window {
+  position: absolute;
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 110px;
+  border: 7px solid #6b5138;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.window-night {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0d1226, #1a2140);
+}
+.window-moon {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #f0ead3;
+  box-shadow: 0 0 14px rgba(240, 234, 211, 0.6);
+}
+.window-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 5px;
+  margin-left: -2.5px;
+  background: #6b5138;
+}
+
+.moonlight {
+  position: absolute;
+  top: 166px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 190px;
+  height: 160px;
+  background: linear-gradient(
+    180deg,
+    rgba(200, 215, 255, 0.1),
+    transparent 85%
+  );
+  clip-path: polygon(28% 0, 72% 0, 100% 100%, 0 100%);
+}
+
+.fridge {
+  position: absolute;
+  bottom: 36%;
+  right: 48px;
+  width: 110px;
+  height: 230px;
+  background: #9aa3ad;
+  border-radius: 8px 8px 3px 3px;
+  box-shadow: inset -14px 0 22px rgba(0, 0, 0, 0.35);
+}
+.fridge-handle {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  width: 7px;
+  height: 70px;
+  border-radius: 4px;
+  background: #5f6770;
+}
+.fridge-magnet {
+  position: absolute;
+  border-radius: 50%;
+}
+.magnet-one {
+  top: 26px;
+  left: 34px;
+  width: 12px;
+  height: 12px;
+  background: #b0453a;
+}
+.magnet-two {
+  top: 44px;
+  left: 62px;
+  width: 10px;
+  height: 10px;
+  background: #d9a05b;
+}
+
+.counter {
+  position: absolute;
+  bottom: 36%;
+  left: 40px;
+  width: 380px;
+  height: 130px;
+}
+.counter-top {
+  position: absolute;
+  top: 0;
+  left: -8px;
+  right: -8px;
+  height: 16px;
+  background: #7d6a52;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+.cabinet {
+  position: absolute;
+  top: 16px;
+  bottom: 0;
+  width: 118px;
+  background: #6b5138;
+  border: 3px solid #59422c;
+  border-radius: 3px;
+}
+.cabinet-one {
+  left: 0;
+}
+.cabinet-two {
+  left: 128px;
+}
+.cabinet-three {
+  left: 256px;
+}
+
+.sink {
+  position: absolute;
+  bottom: calc(36% + 116px);
+  left: 180px;
+  width: 100px;
+  height: 14px;
+  background: #8d959e;
+  border-radius: 4px 4px 8px 8px;
+  box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.45);
+}
+.faucet {
+  position: absolute;
+  bottom: calc(36% + 130px);
+  left: 218px;
+  width: 26px;
+  height: 24px;
+  border-top: 6px solid #b8bfc7;
+  border-right: 6px solid #b8bfc7;
+  border-radius: 0 12px 0 0;
+}
+
+.stove {
+  position: absolute;
+  bottom: calc(36% + 116px);
+  left: 52px;
+  width: 96px;
+  height: 12px;
+  background: #3d3a45;
+  border-radius: 3px;
+}
+.burner {
+  position: absolute;
+  top: 2px;
+  width: 30px;
+  height: 8px;
+  border-radius: 50%;
+  background: #15131c;
+}
+.burner-left {
+  left: 10px;
+}
+.burner-right {
+  right: 10px;
+}
+
+.upper-cabinet {
+  position: absolute;
+  top: 48px;
+  width: 130px;
+  height: 90px;
+  background: #6b5138;
+  border: 3px solid #59422c;
+  border-radius: 4px;
+}
+.upper-left {
+  left: 44px;
+}
+.upper-right {
+  right: 44px;
+}
+
+.hanging-pan {
+  position: absolute;
+  top: 150px;
+  left: 96px;
+  width: 46px;
+  height: 14px;
+  background: #3d3a45;
+  border-radius: 0 0 20px 20px;
+}
+.hanging-pot {
+  position: absolute;
+  top: 150px;
+  right: 110px;
+  width: 38px;
+  height: 22px;
+  background: #8a5443;
+  border-radius: 0 0 12px 12px;
+}
+
+.treat-jar {
+  position: absolute;
+  bottom: calc(36% + 118px);
+  left: 320px;
+  width: 34px;
+  height: 44px;
+  background: rgba(217, 201, 163, 0.55);
+  border: 3px solid #a08b62;
+  border-radius: 6px 6px 10px 10px;
+}
+
+.food-bowl {
+  position: absolute;
+  bottom: 12%;
+  left: 120px;
+  width: 64px;
+  height: 24px;
+  background: #b0453a;
+  border-radius: 6px 6px 20px 20px;
+  box-shadow: inset 0 6px 7px rgba(0, 0, 0, 0.35);
+}
+.kibble {
+  position: absolute;
+  top: -4px;
+  left: 12px;
+  width: 40px;
+  height: 10px;
+  border-radius: 50%;
+  background: #8a6a3f;
+}
+
+.water-bowl {
+  position: absolute;
+  bottom: 12%;
+  left: 200px;
+  width: 56px;
+  height: 22px;
+  background: #3b5a80;
+  border-radius: 6px 6px 18px 18px;
+  box-shadow: inset 0 6px 7px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 480px) {
+  .counter {
+    width: 300px;
+  }
+  .cabinet-three {
+    display: none;
+  }
+  .fridge {
+    right: 16px;
+  }
+  .upper-right {
+    right: 12px;
+  }
+  .treat-jar {
+    left: 250px;
+  }
+}

@@ -1,0 +1,232 @@
+/* src/game/RestStop.css */
+
+.reststop-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #2c3a2f;
+}
+
+.reststop-scene {
+  position: relative;
+  height: 260px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(
+    #2c3350 0%,
+    /* night sky */ #3a4160 55%,
+    #2e3328 56%,
+    /* dark grass */ #23271e 100%
+  );
+  box-shadow: 0 4px 16px rgba(20, 24, 20, 0.45);
+}
+
+/* Lamp post pooling light */
+.night-lamp {
+  position: absolute;
+  left: 44%;
+  top: 12%;
+}
+.lamp-head {
+  width: 40px;
+  height: 16px;
+  margin: 0 auto;
+  background: #f4d98a;
+  border-radius: 8px 8px 2px 2px;
+  box-shadow: 0 30px 60px 30px rgba(244, 217, 138, 0.25);
+  animation: lampflicker 7s linear infinite;
+}
+.lamp-pole {
+  width: 6px;
+  height: 150px;
+  margin: 0 auto;
+  background: #444441;
+}
+
+@keyframes lampflicker {
+  0%,
+  93%,
+  100% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 1;
+  }
+  98% {
+    opacity: 0.75;
+  }
+}
+
+/* Moths circling the light */
+.moth {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 7px;
+  height: 5px;
+  background: #e8dcc0;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: mothloop 4s ease-in-out infinite;
+}
+.moth.two {
+  animation-delay: 2s;
+  animation-duration: 5s;
+}
+
+@keyframes mothloop {
+  0% {
+    transform: translate(-18px, 2px);
+  }
+  25% {
+    transform: translate(10px, -8px);
+  }
+  50% {
+    transform: translate(20px, 6px);
+  }
+  75% {
+    transform: translate(-6px, 12px);
+  }
+  100% {
+    transform: translate(-18px, 2px);
+  }
+}
+
+/* Picnic table */
+.picnic-table {
+  position: absolute;
+  left: 12%;
+  top: 62%;
+}
+.table-top {
+  display: block;
+  width: 130px;
+  height: 10px;
+  background: #8a6a52;
+  border-radius: 3px;
+}
+.table-top::before,
+.table-top::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  width: 8px;
+  height: 34px;
+  background: #6b4a3a;
+}
+.table-top::before {
+  left: 22px;
+  transform: skewX(14deg);
+}
+.table-top::after {
+  right: 22px;
+  transform: skewX(-14deg);
+}
+.table-seat {
+  position: absolute;
+  top: 22px;
+  width: 34px;
+  height: 7px;
+  background: #8a6a52;
+  border-radius: 2px;
+}
+.table-seat.left {
+  left: -18px;
+}
+.table-seat.right {
+  right: -18px;
+}
+
+/* Vending machine */
+.vending {
+  position: absolute;
+  right: 12%;
+  top: 42%;
+  width: 64px;
+  height: 118px;
+  background: #4f7d78;
+  border-radius: 8px;
+  border: 3px solid #3a5f5b;
+}
+.vend-glow {
+  position: absolute;
+  left: 8px;
+  top: 10px;
+  width: 30px;
+  bottom: 30px;
+  background: #cfe3e0;
+  border-radius: 4px;
+  opacity: 0.85;
+  animation: vendhum 3s ease-in-out infinite alternate;
+}
+
+@keyframes vendhum {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+    box-shadow: 0 0 14px 3px rgba(207, 227, 224, 0.35);
+  }
+}
+
+/* Trash can */
+.trash-can {
+  position: absolute;
+  right: 28%;
+  top: 70%;
+  width: 34px;
+  height: 44px;
+  background: #55605c;
+  border-radius: 4px 4px 8px 8px;
+  border-top: 5px solid #6e7a76;
+}
+
+/* --- Text + choices --- */
+.reststop-text {
+  margin-top: 20px;
+}
+.reststop-text .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: #6b7d6e;
+  margin-bottom: 4px;
+}
+.reststop-text h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+.reststop-text p {
+  line-height: 1.6;
+  font-size: 17px;
+}
+
+.reststop-choices {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.reststop-button {
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  padding: 12px 18px;
+  border: 2px solid #3a4160;
+  border-radius: 10px;
+  background: #f4e9d4;
+  color: #2c3a2f;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.reststop-button:hover {
+  background: #ead9b8;
+  transform: translateX(4px);
+}

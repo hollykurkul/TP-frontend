@@ -1,0 +1,424 @@
+.den {
+  position: relative;
+  max-width: 720px;
+  min-height: 640px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #241a12 0%, #2e2015 55%, #382818 100%);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.den-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.den-earth {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 12% 18%,
+      rgba(0, 0, 0, 0.25) 0 26px,
+      transparent 27px
+    ),
+    radial-gradient(
+      circle at 84% 12%,
+      rgba(0, 0, 0, 0.2) 0 20px,
+      transparent 21px
+    ),
+    radial-gradient(
+      circle at 90% 66%,
+      rgba(0, 0, 0, 0.22) 0 24px,
+      transparent 25px
+    ),
+    radial-gradient(
+      circle at 8% 74%,
+      rgba(0, 0, 0, 0.2) 0 18px,
+      transparent 19px
+    ),
+    #2e2015;
+}
+
+.den-hollow {
+  position: absolute;
+  top: 14%;
+  left: 8%;
+  right: 8%;
+  bottom: 10%;
+  background: radial-gradient(
+    ellipse at 50% 60%,
+    #4a3521 0%,
+    #3d2b1a 60%,
+    transparent 100%
+  );
+  border-radius: 48% 52% 45% 55% / 55% 50% 50% 45%;
+}
+
+.den-entrance {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  width: 110px;
+  height: 90px;
+  border-radius: 50% 50% 45% 45%;
+  overflow: hidden;
+  border: 10px solid #1d1410;
+}
+.den-entrance-sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0d1226, #1a2140);
+}
+.den-entrance-moon {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f0ead3;
+  box-shadow: 0 0 14px rgba(240, 234, 211, 0.6);
+}
+
+.den-root {
+  position: absolute;
+  top: 0;
+  width: 12px;
+  background: #59422c;
+  border-radius: 0 0 8px 8px;
+}
+.den-root-one {
+  left: 18%;
+  height: 110px;
+  transform: rotate(4deg);
+}
+.den-root-two {
+  left: 34%;
+  height: 70px;
+  transform: rotate(-6deg);
+}
+.den-root-three {
+  left: 55%;
+  height: 90px;
+  transform: rotate(3deg);
+}
+.den-root::after {
+  content: "";
+  position: absolute;
+  bottom: -14px;
+  left: 3px;
+  width: 7px;
+  height: 26px;
+  background: inherit;
+  border-radius: 0 0 6px 6px;
+  transform: rotate(14deg);
+}
+
+.den-rock {
+  position: absolute;
+  background: #57544d;
+  border-radius: 45% 55% 40% 50%;
+  box-shadow: inset -6px -6px 10px rgba(0, 0, 0, 0.4);
+}
+.den-rock-one {
+  bottom: 14%;
+  left: 10%;
+  width: 64px;
+  height: 42px;
+}
+.den-rock-two {
+  bottom: 12%;
+  right: 12%;
+  width: 46px;
+  height: 30px;
+}
+
+.den-moss {
+  position: absolute;
+  background: #4f6b42;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+.den-moss-one {
+  bottom: 17%;
+  left: 13%;
+  width: 50px;
+  height: 14px;
+}
+.den-moss-two {
+  top: 26%;
+  left: 44%;
+  width: 60px;
+  height: 12px;
+}
+
+.den-mushroom {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  background: #d9c9a3;
+  border-radius: 3px;
+}
+.den-mushroom::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -5px;
+  width: 20px;
+  height: 12px;
+  background: #b0653c;
+  border-radius: 50% 50% 8px 8px;
+}
+.den-mushroom-one {
+  bottom: 13%;
+  left: 22%;
+}
+.den-mushroom-two {
+  bottom: 12%;
+  left: 27%;
+  transform: scale(0.7);
+}
+
+.den-leaf-bed {
+  position: absolute;
+  bottom: 14%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 70px;
+  background: #5d4a2e;
+  border-radius: 50% 50% 40% 40% / 90% 90% 30% 30%;
+  box-shadow: inset 0 10px 16px rgba(0, 0, 0, 0.35);
+}
+.den-leaf {
+  position: absolute;
+  width: 34px;
+  height: 18px;
+  background: #6e5a37;
+  border-radius: 0 60% 0 60%;
+}
+.den-leaf-one {
+  top: 8px;
+  left: 30px;
+  transform: rotate(-14deg);
+}
+.den-leaf-two {
+  top: 14px;
+  left: 100px;
+  transform: rotate(10deg);
+  background: #7d6842;
+}
+.den-leaf-three {
+  top: 6px;
+  left: 165px;
+  transform: rotate(-4deg);
+  background: #66522f;
+}
+
+.den-acorn-stash {
+  position: absolute;
+  bottom: 15%;
+  right: 22%;
+  width: 70px;
+  height: 30px;
+}
+.den-acorn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 16px;
+  height: 20px;
+  background: #a97142;
+  border-radius: 45% 45% 55% 55%;
+}
+.den-acorn::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 1px;
+  width: 14px;
+  height: 8px;
+  background: #59422c;
+  border-radius: 50% 50% 4px 4px;
+}
+.den-acorn-two {
+  left: 22px;
+}
+.den-acorn-three {
+  left: 11px;
+  bottom: 12px;
+}
+
+.den-glow {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 160px;
+  background: radial-gradient(
+    ellipse,
+    rgba(255, 200, 120, 0.12),
+    transparent 70%
+  );
+}
+
+.den-mote {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 226, 170, 0.7);
+  box-shadow: 0 0 6px rgba(255, 226, 170, 0.5);
+  animation: den-drift 6s ease-in-out infinite;
+}
+
+@keyframes den-drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.7;
+  }
+  30% {
+    transform: translate(10px, -14px);
+    opacity: 0.25;
+  }
+  60% {
+    transform: translate(-8px, -24px);
+    opacity: 0.7;
+  }
+  85% {
+    transform: translate(6px, -10px);
+    opacity: 0.35;
+  }
+}
+
+.den-sleep-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 8, 5, 0.45);
+  animation: den-fade-in 0.6s ease;
+}
+.den-zzz {
+  position: absolute;
+  left: 52%;
+  bottom: 34%;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  color: #ffe2aa;
+  text-shadow: 0 0 8px rgba(255, 226, 170, 0.6);
+  animation: den-zzz-rise 2.2s ease-out infinite;
+}
+.den-zzz-one {
+  font-size: 18px;
+}
+.den-zzz-two {
+  font-size: 24px;
+  animation-delay: 0.4s;
+}
+.den-zzz-three {
+  font-size: 32px;
+  animation-delay: 0.8s;
+}
+
+@keyframes den-zzz-rise {
+  from {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(36px, -70px);
+    opacity: 0;
+  }
+}
+@keyframes den-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.den-ui {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18px 24px 22px;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  background: linear-gradient(0deg, rgba(10, 8, 5, 0.75), transparent);
+}
+.den-title {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #e8e6df;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+.den-desc {
+  margin: 4px 0 14px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #b3a893;
+}
+.den-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.den-btn {
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #f2f0e9;
+  background: linear-gradient(180deg, #59422c, #3d2b1a);
+  border: 1px solid #7d6842;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    border-color 0.15s ease;
+}
+.den-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #c2a583;
+}
+.den-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.den-btn-secondary {
+  background: transparent;
+  border-style: dashed;
+  color: #b3a893;
+}
+
+@media (max-width: 480px) {
+  .den-entrance {
+    width: 84px;
+    height: 70px;
+    right: 6%;
+  }
+  .den-leaf-bed {
+    width: 190px;
+  }
+  .den-acorn-stash {
+    right: 12%;
+  }
+  .den-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
