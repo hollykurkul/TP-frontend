@@ -1,10 +1,7 @@
 import { useState } from "react";
 import "./Den.css";
 
-export default function Den({
-  onNavigate = (id) => console.log("navigate →", id),
-  onRest = () => {},
-}) {
+export default function Den({ onGo = () => {}, onRest = () => {} }) {
   const [sleeping, setSleeping] = useState(false);
 
   const sleep = () => {
@@ -72,7 +69,7 @@ export default function Den({
           </button>
           <button
             className="den-btn den-btn-secondary"
-            onClick={() => onNavigate("pond")}
+            onClick={() => onGo("pond")}
           >
             Return to Pond
           </button>

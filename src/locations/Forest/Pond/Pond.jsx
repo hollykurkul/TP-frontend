@@ -33,29 +33,29 @@ export default function Pond({ onGo = () => {} }) {
       </div>
 
       <section className="pond-text">
-        <p className="eyebrow">The Pawdessey</p>
+        <p className="eyebrow">The Pawdyssey</p>
         <h1>The Pond</h1>
         <p>
-          Still water reflects a sky that seems slightly wrong, like a painting
-          of a memory. Dragonflies stitch the air. Something ripples near the
-          reeds.
+          The water is still and cool. From here, you can seek shelter in a cozy
+          den, or wander into a nearby sunlit clearing.
         </p>
       </section>
 
+      {/* fixed buttons: now routing to game locations */}
       <section className="pond-choices">
         <button
           type="button"
           className="pond-button"
-          onClick={() => onGo("reeds")}
+          onClick={() => onGo("den")} // sends the player to the den scene
         >
-          Peer into the reeds
+          Go to the Cozy Den
         </button>
         <button
           type="button"
           className="pond-button"
-          onClick={() => onGo("busStop")}
+          onClick={() => onGo("clearing")} // sends the player to the clearing scene
         >
-          Head back to the bus stop
+          Go to the Clearing
         </button>
       </section>
     </main>
