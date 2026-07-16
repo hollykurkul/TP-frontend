@@ -2,6 +2,10 @@ import { Link, Route, Routes } from "react-router";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import React, { useState } from "react";
+import Pond from "./game/Pond";
+import Den from "./game/Den";
+import Clearing from "./game/Clearing";
 
 function MainMenu() {
   return (
@@ -59,7 +63,21 @@ function MainMenu() {
     </main>
   );
 }
+function ForestController() {
+  const [currentScene, setCurrentScene] = useState("pond");
 
+  const handleNavigation = (destination) => {
+    setCurrentScene(destination);
+  };
+
+  return (
+    <div className="forest-zone">
+      {currentScene === "pond" && <Pond onGo={handleNavigation} />}
+      {currentScene === "den" && <Den onGo={handleNavigation} />}
+      {currentScene === "clearing" && <Clearing onGo={handleNavigation} />}
+    </div>
+  );
+}
 export default function App() {
   return (
     <Routes>
@@ -67,6 +85,7 @@ export default function App() {
         <Route index element={<MainMenu />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forest" element={<ForestController />} />
       </Route>
     </Routes>
   );

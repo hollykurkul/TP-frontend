@@ -1,6 +1,7 @@
 import "./Clearing.css";
 
-export default function Clearing() {
+// added onGo to receive scene swapping function
+export default function Clearing({ onGo = () => {} }) {
   return (
     <div className="clearing">
       <div className="clearing-scene">
@@ -59,6 +60,31 @@ export default function Clearing() {
           className="cl-butterfly cl-butterfly-blue"
           style={{ top: "56%", left: "68%" }}
         />
+      </div>
+      {/* added ui text and interactive buttons so game functions */}
+      <div className="clearing-ui" style={{ position: "relative", zIndex: 10 }}>
+        <h1
+          className="clearing-title"
+          style={{ fontSize: "2rem", margin: "10px 0" }}
+        >
+          The Clearing
+        </h1>
+        <p className="clearing-desc" style={{ marginBottom: "20px" }}>
+          Wildflowers dance in a wide, sunny clearing. You see gentle forest
+          critters playing in the tall grass, but the open sky leaves you
+          feeling exposed.
+        </p>
+
+        <div className="clearing-actions">
+          <button
+            type="button"
+            className="clearing-btn"
+            onClick={() => onGo("pond")}
+            style={{ padding: "10px 20px", cursor: "pointer" }}
+          >
+            Return to Pond
+          </button>
+        </div>
       </div>
     </div>
   );
