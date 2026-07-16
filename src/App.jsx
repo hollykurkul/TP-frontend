@@ -6,6 +6,9 @@ import React, { useState } from "react";
 import Pond from "./game/Pond";
 import Den from "./game/Den";
 import Clearing from "./game/Clearing";
+import BusStop from "./game/BusStop";
+import Ditch from "./game/Ditch";
+import RestStop from "./game/RestStop";
 
 function MainMenu() {
   return (
@@ -78,6 +81,21 @@ function ForestController() {
     </div>
   );
 }
+function RoadController() {
+  const [currentScene, setCurrentScene] = useState("busStop");
+
+  const handleNavigation = (destination) => {
+    setCurrentScene(destination);
+  };
+
+  return (
+    <div className="road-zone">
+      {currentScene === "busStop" && <BusStop onGo={handleNavigation} />}
+      {currentScene === "ditch" && <Ditch onGo={handleNavigation} />}
+      {currentScene === "restStop" && <RestStop onGo={handleNavigation} />}
+    </div>
+  );
+}
 export default function App() {
   return (
     <Routes>
@@ -86,6 +104,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forest" element={<ForestController />} />
+        <Route path="/road" element={<RoadController />} />
       </Route>
     </Routes>
   );
