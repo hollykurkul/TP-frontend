@@ -1,4 +1,3 @@
-// src/game/CityPark.jsx
 import "./CityPark.css";
 
 export default function CityPark({ onGo = () => {} }) {
@@ -45,7 +44,7 @@ export default function CityPark({ onGo = () => {} }) {
       </div>
 
       <section className="citypark-text">
-        <p className="eyebrow">The Pawdessey</p>
+        <p className="eyebrow">The Pawdyssey — Act Three</p>
         <h1>The City Park</h1>
         <p>
           Beyond the wilderness, a tidy park sits at the feet of a hazy skyline.
@@ -58,23 +57,17 @@ export default function CityPark({ onGo = () => {} }) {
         <button
           type="button"
           className="citypark-button"
-          onClick={() => onGo("fountain")}
+          onClick={() => onGo("emptyDumpster")}
         >
-          Look closer at the fountain
+          Check out the empty dumpster nearby
         </button>
+
         <button
           type="button"
           className="citypark-button"
-          onClick={() => onGo("bench")}
+          onClick={() => onGo("alleyWay")}
         >
-          Sit on the bench a while
-        </button>
-        <button
-          type="button"
-          className="citypark-button"
-          onClick={() => onGo("busStop")}
-        >
-          Head back to the bus stop
+          Head down the dark alleyway
         </button>
       </section>
     </main>

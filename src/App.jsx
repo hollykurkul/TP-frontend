@@ -9,6 +9,9 @@ import Clearing from "./game/Clearing";
 import BusStop from "./game/BusStop";
 import Ditch from "./game/Ditch";
 import RestStop from "./game/RestStop";
+import CityPark from "./game/CityPark";
+import EmptyDumpster from "./game/EmptyDumpster";
+import AlleyWay from "./game/AlleyWay";
 
 function MainMenu() {
   return (
@@ -96,6 +99,23 @@ function RoadController() {
     </div>
   );
 }
+function CityController() {
+  const [currentScene, setCurrentScene] = useState("cityPark");
+
+  const handleNavigation = (destination) => {
+    setCurrentScene(destination);
+  };
+
+  return (
+    <div className="city-zone">
+      {currentScene === "cityPark" && <CityPark onGo={handleNavigation} />}
+      {currentScene === "emptyDumpster" && (
+        <EmptyDumpster onGo={handleNavigation} />
+      )}
+      {currentScene === "alleyWay" && <AlleyWay onGo={handleNavigation} />}
+    </div>
+  );
+}
 export default function App() {
   return (
     <Routes>
@@ -105,6 +125,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/forest" element={<ForestController />} />
         <Route path="/road" element={<RoadController />} />
+        <Route path="/city" element={<CityController />} />
       </Route>
     </Routes>
   );
