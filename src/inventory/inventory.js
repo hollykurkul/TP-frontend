@@ -9,7 +9,7 @@ const itemCatalog = {
     description: "a small stick, pointy at the tip. ouch!",
     imageUrl: "",
     canEquip: true,
-    canUse: true,
+    canUse: false,
   },
   bigBranch: {
     id: "bigBranch",
@@ -96,7 +96,7 @@ const itemCatalog = {
     name: "Cactus Fruit",
     type: "Consumable",
     effect: "Restores 1 heart",
-    description: "A spiky fruit that yields a sweet, refreshing juice.",
+    description: "A spiky fruit that yields a sweet, refreshing juice. its the quenchiest",
     imageUrl: "",
     canEquip: false,
     canUse: true,

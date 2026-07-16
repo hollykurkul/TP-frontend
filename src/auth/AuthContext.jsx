@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-const API = import.meta.env.VITE_API;
+import { loginUser, registerUser } from "../api/users";
 
 const AuthContext = createContext();
 
@@ -12,25 +12,16 @@ export function AuthProvider({ children }) {
   }, [token]);
 
   const register = async (credentials) => {
-    const response = await fetch(API + "/users/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials),
-    });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
+    const result = await registerUser(
+      credentials.username,
+      credentials.password,
+    );
+    setToken(result.token);
   };
 
   const login = async (credentials) => {
-    const response = await fetch(API + "/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials),
-    });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
+    const result = await loginUser(credentials.username, credentials.password);
+    setToken(result.token);
   };
 
   const logout = () => {
