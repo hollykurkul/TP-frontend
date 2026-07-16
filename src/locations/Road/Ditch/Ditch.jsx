@@ -1,4 +1,3 @@
-// src/game/Ditch.jsx
 import "./Ditch.css";
 
 export default function Ditch({ onGo = () => {} }) {
@@ -18,7 +17,7 @@ export default function Ditch({ onGo = () => {} }) {
       </div>
 
       <section className="ditch-text">
-        <p className="eyebrow">The Pawdessey — Act Two</p>
+        <p className="eyebrow">The Pawdyssey — Act Two</p>
         <h1>The Ditch</h1>
         <p>
           A muddy trench runs beside the road, littered with lost things. From
@@ -30,17 +29,10 @@ export default function Ditch({ onGo = () => {} }) {
       <section className="ditch-choices">
         <button
           type="button"
-          className="ditch-button danger"
-          onClick={() => onGo("combat")}
-        >
-          1. Enter combat
-        </button>
-        <button
-          type="button"
           className="ditch-button"
-          onClick={() => onGo("road")}
+          onClick={() => onGo("busStop")}
         >
-          2. Scramble back to the road
+          Return to the bus stop
         </button>
       </section>
     </main>

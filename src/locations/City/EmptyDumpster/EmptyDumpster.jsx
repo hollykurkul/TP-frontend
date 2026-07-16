@@ -1,9 +1,9 @@
 import "./EmptyDumpster.css";
 
-export default function EmptyDumpster() {
+export default function EmptyDumpster({ onGo = () => {} }) {
   return (
-    <div className="empty-dumpster">
-      <div className="dumpster-scene">
+    <main className="emptydumpster-page">
+      <div className="emptydumpster-scene" aria-hidden="true">
         <div className="back-wall" />
         <div className="drainpipe" />
         <div className="streetlight">
@@ -27,6 +27,27 @@ export default function EmptyDumpster() {
         <div className="puddle" />
         <div className="fog" />
       </div>
-    </div>
+
+      <section className="emptydumpster-text">
+        <p className="eyebrow">The Pawdyssey — Act Three</p>
+        <h1>The Empty Dumpster</h1>
+        <p>
+          An oversized green bin sits propped open beneath a flickering
+          streetlamp. While it smells faintly of old cardboard, it looks
+          surprisingly dry and sheltered, making it a quiet corner to tuck away
+          from the busy streets.
+        </p>
+      </section>
+
+      <section className="emptydumpster-choices">
+        <button
+          type="button"
+          className="emptydumpster-button"
+          onClick={() => onGo("cityPark")}
+        >
+          Climb back out and return to the park
+        </button>
+      </section>
+    </main>
   );
 }

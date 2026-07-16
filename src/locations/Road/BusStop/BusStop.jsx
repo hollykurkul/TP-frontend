@@ -1,4 +1,3 @@
-// src/game/BusStop.jsx
 import "./BusStop.css";
 
 export default function BusStop({ onGo = () => {} }) {
@@ -20,12 +19,11 @@ export default function BusStop({ onGo = () => {} }) {
       </div>
 
       <section className="busstop-text">
-        <p className="eyebrow">The Pawdessey</p>
+        <p className="eyebrow">The Pawdyssey</p>
         <h1>The Bus Stop</h1>
         <p>
-          A weathered bus stop sits at the edge of the wilderness, its sign
-          covered in pawprints instead of route numbers. Trails lead off in
-          every direction. This feels like a place you&apos;ll return to often.
+          A weathered bus stop sits at the edge of the asphalt, its sign covered
+          in pawprints. The road stretches on ahead.
         </p>
       </section>
 
@@ -33,23 +31,17 @@ export default function BusStop({ onGo = () => {} }) {
         <button
           type="button"
           className="busstop-button"
-          onClick={() => onGo("pond")}
+          onClick={() => onGo("ditch")}
         >
-          Follow the muddy trail to the pond
+          Climb down into the ditch
         </button>
+
         <button
           type="button"
           className="busstop-button"
-          onClick={() => onGo("forest")}
+          onClick={() => onGo("restStop")}
         >
-          Take the shaded path into the forest
-        </button>
-        <button
-          type="button"
-          className="busstop-button"
-          onClick={() => onGo("hill")}
-        >
-          Climb the grassy hill
+          Head over to the highway rest stop
         </button>
       </section>
     </main>

@@ -1,7 +1,10 @@
-// src/game/RestStop.jsx
 import "./RestStop.css";
 
 export default function RestStop({ onGo = () => {} }) {
+  const handleRest = () => {
+    alert("You curled up and restored your HP!");
+  };
+
   return (
     <main className="reststop-page">
       <div className="reststop-scene" aria-hidden="true">
@@ -23,7 +26,7 @@ export default function RestStop({ onGo = () => {} }) {
       </div>
 
       <section className="reststop-text">
-        <p className="eyebrow">The Pawdessey — Act Two</p>
+        <p className="eyebrow">The Pawdyssey — Act Two</p>
         <h1>The Rest Stop</h1>
         <p>
           A pool of lamplight in the dark, with a picnic table and a humming
@@ -32,19 +35,16 @@ export default function RestStop({ onGo = () => {} }) {
       </section>
 
       <section className="reststop-choices">
-        <button
-          type="button"
-          className="reststop-button"
-          onClick={() => onGo("rest")}
-        >
-          1. Curl up and rest (restore HP)
+        <button type="button" className="reststop-button" onClick={handleRest}>
+          Curl up and rest (restore HP)
         </button>
+
         <button
           type="button"
           className="reststop-button"
-          onClick={() => onGo("road")}
+          onClick={() => onGo("busStop")}
         >
-          2. Return to the road
+          Return to the bus stop
         </button>
       </section>
     </main>
