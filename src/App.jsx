@@ -1,8 +1,9 @@
-import { Link, Route, Routes } from "react-router";
+import { Link, Route, Routes, useNavigate } from "react-router";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import React, { useState } from "react";
+import CharacterSelect from "./characterSelect";
 import Pond from "./game/Pond";
 import Den from "./game/Den";
 import Clearing from "./game/Clearing";
@@ -13,7 +14,7 @@ import CityPark from "./game/CityPark";
 import EmptyDumpster from "./game/EmptyDumpster";
 import AlleyWay from "./game/AlleyWay";
 
-function MainMenu() {
+function MainMenu({ onStartNewGame }) {
   return (
     <main className="menu-page">
       <section className="title-section">
@@ -42,7 +43,11 @@ function MainMenu() {
           <h2>New Game</h2>
           <p>Begin a fresh adventure from the first trail marker.</p>
 
-          <button type="button" className="menu-button">
+          <button
+            type="button"
+            className="menu-button"
+            onClick={onStartNewGame}
+          >
             Start New Game
           </button>
         </section>
@@ -69,7 +74,8 @@ function MainMenu() {
     </main>
   );
 }
-function ForestController() {
+
+function ForestController({ character }) {
   const [currentScene, setCurrentScene] = useState("pond");
 
   const handleNavigation = (destination) => {
@@ -78,13 +84,20 @@ function ForestController() {
 
   return (
     <div className="forest-zone">
-      {currentScene === "pond" && <Pond onGo={handleNavigation} />}
-      {currentScene === "den" && <Den onGo={handleNavigation} />}
-      {currentScene === "clearing" && <Clearing onGo={handleNavigation} />}
+      {currentScene === "pond" && (
+        <Pond character={character} onGo={handleNavigation} />
+      )}
+      {currentScene === "den" && (
+        <Den character={character} onGo={handleNavigation} />
+      )}
+      {currentScene === "clearing" && (
+        <Clearing character={character} onGo={handleNavigation} />
+      )}
     </div>
   );
 }
-function RoadController() {
+
+function RoadController({ character }) {
   const [currentScene, setCurrentScene] = useState("busStop");
 
   const handleNavigation = (destination) => {
@@ -93,13 +106,20 @@ function RoadController() {
 
   return (
     <div className="road-zone">
-      {currentScene === "busStop" && <BusStop onGo={handleNavigation} />}
-      {currentScene === "ditch" && <Ditch onGo={handleNavigation} />}
-      {currentScene === "restStop" && <RestStop onGo={handleNavigation} />}
+      {currentScene === "busStop" && (
+        <BusStop character={character} onGo={handleNavigation} />
+      )}
+      {currentScene === "ditch" && (
+        <Ditch character={character} onGo={handleNavigation} />
+      )}
+      {currentScene === "restStop" && (
+        <RestStop character={character} onGo={handleNavigation} />
+      )}
     </div>
   );
 }
-function CityController() {
+
+function CityController({ character }) {
   const [currentScene, setCurrentScene] = useState("cityPark");
 
   const handleNavigation = (destination) => {
@@ -108,24 +128,59 @@ function CityController() {
 
   return (
     <div className="city-zone">
-      {currentScene === "cityPark" && <CityPark onGo={handleNavigation} />}
-      {currentScene === "emptyDumpster" && (
-        <EmptyDumpster onGo={handleNavigation} />
+      {currentScene === "cityPark" && (
+        <CityPark character={character} onGo={handleNavigation} />
       )}
-      {currentScene === "alleyWay" && <AlleyWay onGo={handleNavigation} />}
+      {currentScene === "emptyDumpster" && (
+        <EmptyDumpster character={character} onGo={handleNavigation} />
+      )}
+      {currentScene === "alleyWay" && (
+        <AlleyWay character={character} onGo={handleNavigation} />
+      )}
     </div>
   );
 }
+
 export default function App() {
+  const [character, setCharacter] = useState(null);
+  const navigate = useNavigate();
+
+  const handleStartNewGame = () => {
+    navigate("/character-select");
+  };
+
+  const handleSelectCharacter = (selectedChar) => {
+    setCharacter(selectedChar);
+    navigate("/forest");
+  };
+
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<MainMenu />} />
+        <Route
+          index
+          element={<MainMenu onStartNewGame={handleStartNewGame} />}
+        />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/forest" element={<ForestController />} />
-        <Route path="/road" element={<RoadController />} />
-        <Route path="/city" element={<CityController />} />
+        <Route
+          path="/character-select"
+          element={
+            <CharacterSelect onSelectCharacter={handleSelectCharacter} />
+          }
+        />
+        <Route
+          path="/forest"
+          element={<ForestController character={character} />}
+        />
+        <Route
+          path="/road"
+          element={<RoadController character={character} />}
+        />
+        <Route
+          path="/city"
+          element={<CityController character={character} />}
+        />
       </Route>
     </Routes>
   );
