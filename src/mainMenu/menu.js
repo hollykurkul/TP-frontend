@@ -68,7 +68,7 @@ function renderSaves(saves) {
 
 async function refreshSaves() {
   try {
-    const saves = await window.PawdesseyApi.getSaves();
+    const saves = await window.PawdysseyApi.getSaves();
     renderSaves(Array.isArray(saves) ? saves : saves.saves || []);
   } catch (error) {
     setMenuMessage(error.message);
@@ -80,8 +80,8 @@ loginForm.addEventListener("submit", async (event) => {
   const { username, password } = getFormValues(loginForm);
 
   try {
-    const result = await window.PawdesseyApi.login(username, password);
-    window.PawdesseyApi.setToken(result.token);
+    const result = await window.PawdysseyApi.login(username, password);
+    window.PawdysseyApi.setToken(result.token);
     setMenuMessage("Logged in. Saved games loaded.");
     await refreshSaves();
     showGamePanels();
@@ -95,8 +95,8 @@ registerForm.addEventListener("submit", async (event) => {
   const { username, password } = getFormValues(registerForm);
 
   try {
-    const result = await window.PawdesseyApi.register(username, password);
-    window.PawdesseyApi.setToken(result.token);
+    const result = await window.PawdysseyApi.register(username, password);
+    window.PawdysseyApi.setToken(result.token);
     setMenuMessage("Account created. You can start a new game.");
     await refreshSaves();
     showGamePanels();
@@ -107,7 +107,7 @@ registerForm.addEventListener("submit", async (event) => {
 
 newGameButton.addEventListener("click", async () => {
   try {
-    const save = await window.PawdesseyApi.createSave();
+    const save = await window.PawdysseyApi.createSave();
     window.location.href = `combat.html?saveId=${save.id}`;
   } catch (error) {
     setMenuMessage(error.message);
@@ -123,7 +123,7 @@ loadGameButton.addEventListener("click", () => {
   window.location.href = `combat.html?saveId=${selectedSaveId}`;
 });
 
-if (window.PawdesseyApi.getToken()) {
+if (window.PawdysseyApi.getToken()) {
   refreshSaves();
   showGamePanels();
 }
