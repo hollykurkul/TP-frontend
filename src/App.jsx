@@ -2,17 +2,19 @@ import { Link, Route, Routes, useNavigate } from "react-router";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
-import React, { useState } from "react";
-import CharacterSelect from "./characterSelect";
-import Pond from "./game/Pond";
-import Den from "./game/Den";
-import Clearing from "./game/Clearing";
-import BusStop from "./game/BusStop";
-import Ditch from "./game/Ditch";
-import RestStop from "./game/RestStop";
-import CityPark from "./game/CityPark";
-import EmptyDumpster from "./game/EmptyDumpster";
-import AlleyWay from "./game/AlleyWay";
+import { useState } from "react";
+import CharacterSelect from "./characterSelect/characterSelect.jsx";
+import Pond from "./locations/Forest/Pond/Pond.jsx";
+import Den from "./locations/Forest/Den/Den.jsx";
+import Clearing from "./locations/Forest/Clearing/Clearing.jsx";
+
+import BusStop from "./locations/Road/BusStop/BusStop.jsx";
+import Ditch from "./locations/Road/Ditch/Ditch.jsx";
+import RestStop from "./locations/Road/RestStop/RestStop.jsx";
+
+import CityPark from "./locations/City/CityPark/CityPark.jsx";
+import EmptyDumpster from "./locations/City/EmptyDumpster/EmptyDumpster.jsx";
+import AlleyWay from "./locations/City/Alleyway/Alleyway.jsx";
 
 function MainMenu({ onStartNewGame }) {
   return (

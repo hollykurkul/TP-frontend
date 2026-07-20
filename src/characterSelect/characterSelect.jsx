@@ -1,5 +1,4 @@
-import React from "react";
-
+import "./characterSelect.css";
 const CHARACTERS = [
   {
     id: "stan",
@@ -14,14 +13,16 @@ const CHARACTERS = [
     name: "Athena",
     description:
       "A fur missile with limitless energy, a sharp mind, and a knack for finding trouble, she wont stop until she completes whatever task is set before her.",
-    image: null,
+    image:
+      "https://cdn.discordapp.com/attachments/1523867510359720010/1526952398076252212/05D812C0-54F9-4056-8032-12EF1AE73DAF.png?ex=6a5f7c3d&is=6a5e2abd&hm=9b0df04a639f407ae86cde107b0ab644a0d0283baa7a18bc74121acf64f34afd&",
   },
   {
     id: "tray",
     name: "Tray",
     description:
       "A loyal, intelligent and protective companion with playful spirit. Always ready for the next adventure.",
-    image: null,
+    image:
+      "https://cdn.discordapp.com/attachments/1523867510359720010/1526952446759534797/295A859A-F2E7-4DC2-89C6-6774B57F5151.png?ex=6a5f7c48&is=6a5e2ac8&hm=73920d11f43ce07e36fc733846f8817120ed3945bf1dd4459822f1f1a0b3c71e&",
   },
   {
     id: "opie",
@@ -44,7 +45,8 @@ const CHARACTERS = [
     name: "Lincoln",
     description:
       "A total wildcard, Lincoln excels at making a class about web development feel fresh and exciting with every appearance.",
-    image: null,
+    image:
+      "https://cdn.discordapp.com/attachments/1523867510359720010/1526952485372297356/40BE80B3-A41C-4037-A49E-D9EF16D71EFE.png?ex=6a5f7c51&is=6a5e2ad1&hm=170aba4686229d0188c09fe989a88b691f04dde238c0516a44ed52c141de5218&",
   },
 ];
 
