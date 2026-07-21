@@ -54,7 +54,7 @@ export default function Combat({ character }) {
         turnMessages.push("The enemy blocks your attack.");
       } else {
         nextEnemyHearts = Math.max(0, nextEnemyHearts - 1);
-        turnMessages.push("Your attack removes one enemy heart.");
+        turnMessages.push("Your slash damages the enemy.");
       }
     }
 
@@ -66,10 +66,10 @@ export default function Combat({ character }) {
 
     if (enemyIntent === "attack") {
       if (playerAction === "block") {
-        turnMessages.push("You block the enemy's attack and lose no hearts.");
+        turnMessages.push("You block the enemy's attack and take no damage.");
       } else {
         nextPlayerHearts = Math.max(0, nextPlayerHearts - 1);
-        turnMessages.push("The enemy attacks and removes one of your hearts.");
+        turnMessages.push("The enemy attacks and cuts your fur.");
       }
     } else if (playerAction === "block") {
       turnMessages.push("Both fighters block. No hearts are lost.");
@@ -85,9 +85,7 @@ export default function Combat({ character }) {
 
     const nextIntent = chooseEnemyIntent();
     setEnemyIntent(nextIntent);
-    turnMessages.push(
-      `The enemy announces that it will ${nextIntent} next turn.`,
-    );
+    turnMessages.push(`The enemy seems like it might ${nextIntent} next turn.`);
     setMessage(turnMessages.join(" "));
   }
 
@@ -162,7 +160,7 @@ export default function Combat({ character }) {
           Block
         </button>
         <button type="button" className="danger-button" onClick={flee}>
-          Flee
+          {enemyHearts === 0 ? "Return" : "Flee"}
         </button>
       </section>
     </main>
