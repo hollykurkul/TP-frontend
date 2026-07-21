@@ -1,6 +1,10 @@
 import "./Ditch.css";
 
-export default function Ditch({ onGo = () => {}, onCombat = () => {} }) {
+export default function Ditch({
+  onGo = () => {},
+  onCombat = () => {},
+  onBossCombat = () => {},
+}) {
   return (
     <main className="ditch-page">
       <div className="ditch-scene" aria-hidden="true">
@@ -39,7 +43,14 @@ export default function Ditch({ onGo = () => {}, onCombat = () => {} }) {
           className="ditch-button"
           onClick={onCombat}
         >
-          Confront the creature
+          Fight Road Enemy
+        </button>
+        <button
+          type="button"
+          className="ditch-button"
+          onClick={onBossCombat}
+        >
+          Challenge Road Boss
         </button>
       </section>
     </main>

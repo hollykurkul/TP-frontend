@@ -101,6 +101,17 @@ function ForestController({ character, onStartCombat }) {
           onCombat={() =>
             onStartCombat({
               enemyName: "Forest Fox",
+              enemyMaxHearts: 3,
+              defeatScene: "den",
+              returnTo: "/forest",
+              returnScene: "clearing",
+            })
+          }
+          onBossCombat={() =>
+            onStartCombat({
+              enemyName: "Great Forest Stag",
+              enemyMaxHearts: 5,
+              defeatScene: "den",
               returnTo: "/forest",
               returnScene: "clearing",
             })
@@ -131,6 +142,17 @@ function RoadController({ character, onStartCombat }) {
           onCombat={() =>
             onStartCombat({
               enemyName: "Culvert Creature",
+              enemyMaxHearts: 3,
+              defeatScene: "restStop",
+              returnTo: "/road",
+              returnScene: "ditch",
+            })
+          }
+          onBossCombat={() =>
+            onStartCombat({
+              enemyName: "Culvert Beast",
+              enemyMaxHearts: 5,
+              defeatScene: "restStop",
               returnTo: "/road",
               returnScene: "ditch",
             })
@@ -144,8 +166,9 @@ function RoadController({ character, onStartCombat }) {
   );
 }
 
-function CityController({ character }) {
-  const [currentScene, setCurrentScene] = useState("cityPark");
+function CityController({ character, onStartCombat }) {
+  const location = useLocation();
+  const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "cityPark");
 
   const handleNavigation = (destination) => {
     setCurrentScene(destination);
@@ -160,7 +183,28 @@ function CityController({ character }) {
         <EmptyDumpster character={character} onGo={handleNavigation} />
       )}
       {currentScene === "alleyWay" && (
-        <AlleyWay character={character} onGo={handleNavigation} />
+        <AlleyWay
+          character={character}
+          onGo={handleNavigation}
+          onCombat={() =>
+            onStartCombat({
+              enemyName: "Alley Stray",
+              enemyMaxHearts: 3,
+              defeatScene: "emptyDumpster",
+              returnTo: "/city",
+              returnScene: "alleyWay",
+            })
+          }
+          onBossCombat={() =>
+            onStartCombat({
+              enemyName: "The Night Hound",
+              enemyMaxHearts: 5,
+              defeatScene: "emptyDumpster",
+              returnTo: "/city",
+              returnScene: "alleyWay",
+            })
+          }
+        />
       )}
     </div>
   );
@@ -219,7 +263,12 @@ export default function App() {
         />
         <Route
           path="/city"
-          element={<CityController character={character} />}
+          element={
+            <CityController
+              character={character}
+              onStartCombat={handleStartCombat}
+            />
+          }
         />
       </Route>
     </Routes>

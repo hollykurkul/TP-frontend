@@ -1,6 +1,10 @@
 import "./Alleyway.css";
 
-export default function Alleyway({ onGo = () => {} }) {
+export default function Alleyway({
+  onGo = () => {},
+  onCombat = () => {},
+  onBossCombat = () => {},
+}) {
   return (
     <main className="alleyway-page">
       <div className="alleyway-scene" aria-hidden="true">
@@ -34,6 +38,20 @@ export default function Alleyway({ onGo = () => {} }) {
           onClick={() => onGo("cityPark")}
         >
           Retreat to the park
+        </button>
+        <button
+          type="button"
+          className="alleyway-button"
+          onClick={onCombat}
+        >
+          Fight City Enemy
+        </button>
+        <button
+          type="button"
+          className="alleyway-button"
+          onClick={onBossCombat}
+        >
+          Challenge City Boss
         </button>
       </section>
     </main>

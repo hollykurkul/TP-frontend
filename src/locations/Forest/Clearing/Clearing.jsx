@@ -1,7 +1,11 @@
 import "./Clearing.css";
 
 // added onGo to receive scene swapping function
-export default function Clearing({ onGo = () => {}, onCombat = () => {} }) {
+export default function Clearing({
+  onGo = () => {},
+  onCombat = () => {},
+  onBossCombat = () => {},
+}) {
   return (
     <div className="clearing">
       <div className="clearing-scene">
@@ -90,7 +94,15 @@ export default function Clearing({ onGo = () => {}, onCombat = () => {} }) {
             onClick={onCombat}
             style={{ padding: "10px 20px", cursor: "pointer" }}
           >
-            Confront the fox
+            Fight Forest Enemy
+          </button>
+          <button
+            type="button"
+            className="clearing-btn"
+            onClick={onBossCombat}
+            style={{ padding: "10px 20px", cursor: "pointer" }}
+          >
+            Challenge Forest Boss
           </button>
         </div>
       </div>

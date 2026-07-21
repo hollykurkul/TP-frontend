@@ -9,14 +9,14 @@ function chooseEnemyIntent() {
   return Math.random() < 0.5 ? "attack" : "block";
 }
 
-function HeartBar({ current, label }) {
+function HeartBar({ current, label, max = MAX_HEARTS }) {
   return (
     <div
       className="heart-bar"
       role="img"
-      aria-label={`${label}: ${current} of ${MAX_HEARTS} hearts`}
+      aria-label={`${label}: ${current} of ${max} hearts`}
     >
-      {Array.from({ length: MAX_HEARTS }, (_, index) => (
+      {Array.from({ length: max }, (_, index) => (
         <span
           aria-hidden="true"
           className={index < current ? "heart full" : "heart empty"}
@@ -30,8 +30,10 @@ function HeartBar({ current, label }) {
 export default function Combat({ character }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const enemyName = location.state?.enemyName ?? "Wild Creature";
+  const enemyMaxHearts = location.state?.enemyMaxHearts ?? MAX_HEARTS;
   const [playerHearts, setPlayerHearts] = useState(MAX_HEARTS);
-  const [enemyHearts, setEnemyHearts] = useState(MAX_HEARTS);
+  const [enemyHearts, setEnemyHearts] = useState(enemyMaxHearts);
   const [enemyIntent, setEnemyIntent] = useState(chooseEnemyIntent);
   const [message, setMessage] = useState(
     "The creature watches you carefully. Choose your move.",
@@ -40,7 +42,6 @@ export default function Combat({ character }) {
   const combatEnded = playerHearts === 0 || enemyHearts === 0;
   const playerName = character?.name ?? "Adventurer";
   const playerImage = character?.image;
-  const enemyName = location.state?.enemyName ?? "Wild Creature";
 
   function takeTurn(playerAction) {
     if (combatEnded) return;
@@ -51,10 +52,19 @@ export default function Combat({ character }) {
 
     if (playerAction === "attack") {
       if (enemyIntent === "block") {
-        turnMessages.push("The enemy blocks your attack.");
+        const blockSucceeded = Math.random() < 0.5;
+
+        if (blockSucceeded) {
+          turnMessages.push("The enemy blocks your attack.");
+        } else {
+          nextEnemyHearts = Math.max(0, nextEnemyHearts - 1);
+          turnMessages.push(
+            "the enemy tries to block, but you get past their guard",
+          );
+        }
       } else {
         nextEnemyHearts = Math.max(0, nextEnemyHearts - 1);
-        turnMessages.push("Your attack removes one enemy heart.");
+        turnMessages.push("Your slash damages the enemy.");
       }
     }
 
@@ -66,10 +76,10 @@ export default function Combat({ character }) {
 
     if (enemyIntent === "attack") {
       if (playerAction === "block") {
-        turnMessages.push("You block the enemy's attack and lose no hearts.");
+        turnMessages.push("You block the enemy's attack and take no damage.");
       } else {
         nextPlayerHearts = Math.max(0, nextPlayerHearts - 1);
-        turnMessages.push("The enemy attacks and removes one of your hearts.");
+        turnMessages.push("The enemy attacks and cuts your fur.");
       }
     } else if (playerAction === "block") {
       turnMessages.push("Both fighters block. No hearts are lost.");
@@ -85,19 +95,20 @@ export default function Combat({ character }) {
 
     const nextIntent = chooseEnemyIntent();
     setEnemyIntent(nextIntent);
-    turnMessages.push(
-      `The enemy announces that it will ${nextIntent} next turn.`,
-    );
+    turnMessages.push(`The enemy seems like it might ${nextIntent} next turn.`);
     setMessage(turnMessages.join(" "));
   }
 
   function flee() {
     const returnTo = location.state?.returnTo ?? "/forest";
     const returnScene = location.state?.returnScene;
+    const defeatScene = location.state?.defeatScene;
+    const destinationScene =
+      playerHearts === 0 && defeatScene ? defeatScene : returnScene;
 
     navigate(returnTo, {
       replace: true,
-      state: returnScene ? { scene: returnScene } : undefined,
+      state: destinationScene ? { scene: destinationScene } : undefined,
     });
   }
 
@@ -132,7 +143,11 @@ export default function Combat({ character }) {
             ?
           </div>
           <h2>{enemyName}</h2>
-          <HeartBar current={enemyHearts} label="Enemy health" />
+          <HeartBar
+            current={enemyHearts}
+            label="Enemy health"
+            max={enemyMaxHearts}
+          />
         </article>
       </section>
 
@@ -162,7 +177,7 @@ export default function Combat({ character }) {
           Block
         </button>
         <button type="button" className="danger-button" onClick={flee}>
-          Flee
+          {enemyHearts === 0 ? "Return" : "Flee"}
         </button>
       </section>
     </main>
