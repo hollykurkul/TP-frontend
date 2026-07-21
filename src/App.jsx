@@ -1,9 +1,10 @@
-import { Link, Route, Routes, useNavigate } from "react-router";
+import { Link, Route, Routes, useLocation, useNavigate } from "react-router";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import { useState } from "react";
 import CharacterSelect from "./characterSelect/characterSelect.jsx";
+import Combat from "./combat/Combat.jsx";
 import Pond from "./locations/Forest/Pond/Pond.jsx";
 import Den from "./locations/Forest/Den/Den.jsx";
 import Clearing from "./locations/Forest/Clearing/Clearing.jsx";
@@ -77,8 +78,9 @@ function MainMenu({ onStartNewGame }) {
   );
 }
 
-function ForestController({ character }) {
-  const [currentScene, setCurrentScene] = useState("pond");
+function ForestController({ character, onStartCombat }) {
+  const location = useLocation();
+  const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "pond");
 
   const handleNavigation = (destination) => {
     setCurrentScene(destination);
@@ -93,14 +95,25 @@ function ForestController({ character }) {
         <Den character={character} onGo={handleNavigation} />
       )}
       {currentScene === "clearing" && (
-        <Clearing character={character} onGo={handleNavigation} />
+        <Clearing
+          character={character}
+          onGo={handleNavigation}
+          onCombat={() =>
+            onStartCombat({
+              enemyName: "Forest Fox",
+              returnTo: "/forest",
+              returnScene: "clearing",
+            })
+          }
+        />
       )}
     </div>
   );
 }
 
-function RoadController({ character }) {
-  const [currentScene, setCurrentScene] = useState("busStop");
+function RoadController({ character, onStartCombat }) {
+  const location = useLocation();
+  const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "busStop");
 
   const handleNavigation = (destination) => {
     setCurrentScene(destination);
@@ -112,7 +125,17 @@ function RoadController({ character }) {
         <BusStop character={character} onGo={handleNavigation} />
       )}
       {currentScene === "ditch" && (
-        <Ditch character={character} onGo={handleNavigation} />
+        <Ditch
+          character={character}
+          onGo={handleNavigation}
+          onCombat={() =>
+            onStartCombat({
+              enemyName: "Culvert Creature",
+              returnTo: "/road",
+              returnScene: "ditch",
+            })
+          }
+        />
       )}
       {currentScene === "restStop" && (
         <RestStop character={character} onGo={handleNavigation} />
@@ -156,6 +179,10 @@ export default function App() {
     navigate("/forest");
   };
 
+  const handleStartCombat = (returnLocation) => {
+    navigate("/combat", { state: returnLocation });
+  };
+
   return (
     <Routes>
       <Route element={<Layout />}>
@@ -171,13 +198,24 @@ export default function App() {
             <CharacterSelect onSelectCharacter={handleSelectCharacter} />
           }
         />
+        <Route path="/combat" element={<Combat character={character} />} />
         <Route
           path="/forest"
-          element={<ForestController character={character} />}
+          element={
+            <ForestController
+              character={character}
+              onStartCombat={handleStartCombat}
+            />
+          }
         />
         <Route
           path="/road"
-          element={<RoadController character={character} />}
+          element={
+            <RoadController
+              character={character}
+              onStartCombat={handleStartCombat}
+            />
+          }
         />
         <Route
           path="/city"

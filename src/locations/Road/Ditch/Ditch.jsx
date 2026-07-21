@@ -1,6 +1,6 @@
 import "./Ditch.css";
 
-export default function Ditch({ onGo = () => {} }) {
+export default function Ditch({ onGo = () => {}, onCombat = () => {} }) {
   return (
     <main className="ditch-page">
       <div className="ditch-scene" aria-hidden="true">
@@ -33,6 +33,13 @@ export default function Ditch({ onGo = () => {} }) {
           onClick={() => onGo("busStop")}
         >
           Return to the bus stop
+        </button>
+        <button
+          type="button"
+          className="ditch-button"
+          onClick={onCombat}
+        >
+          Confront the creature
         </button>
       </section>
     </main>

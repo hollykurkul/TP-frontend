@@ -6,7 +6,7 @@ const CHARACTERS = [
     description:
       "A small yet mighty adventurer who doesn't back down from a fight, however his aim when catching prey could use some work.",
     image:
-      "https://cdn.discordapp.com/attachments/1523867510359720010/1526381949013196920/37210721-F4C9-4BC3-AF43-253F7D6E7D1E.png?ex=6a56d177&is=6a557ff7&hm=85521e0d88811c791f494e63474dddd81cc23f32770dff2e06b9447f04aac5a5&",
+      "https://cdn.discordapp.com/attachments/1523867510359720010/1526381949013196920/37210721-F4C9-4BC3-AF43-253F7D6E7D1E.png?ex=6a5f6337&is=6a5e11b7&hm=6d7d4a3f49ff18321b1a3bd78702859638394330f69f4ffd91f775dc716867d7&",
   },
   {
     id: "athena",
@@ -30,7 +30,7 @@ const CHARACTERS = [
     description:
       "As affectionate as he is clever, this tuxedo balances a brilliant and calculating mind with a deeply loving heart. Always figuring out the smartest way to handle trouble, but just as quick to cuddle up when the dust settles!",
     image:
-      "https://cdn.discordapp.com/attachments/1523867510359720010/1526381991862472704/1225AD3D-7550-4EEE-8ADC-866AE00EF7DC.png?ex=6a56d181&is=6a558001&hm=2f612373320718545e6d26325fe883574b1f20f6069d928fd2f4d937745053c2&",
+      "https://cdn.discordapp.com/attachments/1523867510359720010/1524943777134018631/Ajax_asset.png?ex=6a5f6dd0&is=6a5e1c50&hm=6f8a5e895931d7c2111837416c38008a9068bded8c5cd3f1ef637295a155ae1c&",
   },
   {
     id: "ajax",
@@ -38,7 +38,7 @@ const CHARACTERS = [
     description:
       "A wild little spitfire with boundless energy. He's a little stinker, but he'll steal your heart!",
     image:
-      "https://cdn.discordapp.com/attachments/1523867510359720010/1524943777134018631/Ajax_asset.png?ex=6a563350&is=6a54e1d0&hm=3aea7f3ee721fa01b27f6a6383e4dcc79a585a62c4deeefc3643f95e3ccd7a64&",
+      "https://cdn.discordapp.com/attachments/1523867510359720010/1526381991862472704/1225AD3D-7550-4EEE-8ADC-866AE00EF7DC.png?ex=6a5f6341&is=6a5e11c1&hm=72245e0a08849918059906f4535582055b0adda21bfd796995328a68d9162d05&",
   },
   {
     id: "lincoln",
