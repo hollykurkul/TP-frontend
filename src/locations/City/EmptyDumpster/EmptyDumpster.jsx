@@ -1,6 +1,18 @@
+import { useState } from "react";
 import "./EmptyDumpster.css";
 
-export default function EmptyDumpster({ onGo = () => {} }) {
+export default function EmptyDumpster({
+  onGo = () => {},
+  onRest = () => {},
+  playerHearts = 3,
+}) {
+  const [restMessage, setRestMessage] = useState("");
+
+  const handleRest = () => {
+    onRest();
+    setRestMessage("You curl up in the shelter and restore your HP.");
+  };
+
   return (
     <main className="emptydumpster-page">
       <div className="emptydumpster-scene" aria-hidden="true">
@@ -37,9 +49,16 @@ export default function EmptyDumpster({ onGo = () => {} }) {
           surprisingly dry and sheltered, making it a quiet corner to tuck away
           from the busy streets.
         </p>
+        <p role="status">
+          Health: {playerHearts}/3. {restMessage}
+        </p>
       </section>
 
       <section className="emptydumpster-choices">
+        <button type="button" className="emptydumpster-button" onClick={handleRest}>
+          Curl up and rest (restore HP)
+        </button>
+
         <button
           type="button"
           className="emptydumpster-button"

@@ -1,8 +1,16 @@
+import { useState } from "react";
 import "./RestStop.css";
 
-export default function RestStop({ onGo = () => {} }) {
+export default function RestStop({
+  onGo = () => {},
+  onRest = () => {},
+  playerHearts = 3,
+}) {
+  const [restMessage, setRestMessage] = useState("");
+
   const handleRest = () => {
-    alert("You curled up and restored your HP!");
+    onRest();
+    setRestMessage("You curled up and restored your HP.");
   };
 
   return (
@@ -31,6 +39,9 @@ export default function RestStop({ onGo = () => {} }) {
         <p>
           A pool of lamplight in the dark, with a picnic table and a humming
           vending machine. Nobody around. A safe place to catch your breath.
+        </p>
+        <p role="status">
+          Health: {playerHearts}/3. {restMessage}
         </p>
       </section>
 

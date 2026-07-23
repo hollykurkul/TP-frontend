@@ -4,6 +4,8 @@ export default function Alleyway({
   onGo = () => {},
   onCombat = () => {},
   onBossCombat = () => {},
+  combatLoading = false,
+  combatError = "",
 }) {
   return (
     <main className="alleyway-page">
@@ -31,6 +33,11 @@ export default function Alleyway({
         </p>
       </section>
 
+      {(combatLoading || combatError) && (
+        <p role="status" aria-live="polite">
+          {combatLoading ? "Choosing an opponent..." : combatError}
+        </p>
+      )}
       <section className="alleyway-choices">
         <button
           type="button"
@@ -43,6 +50,7 @@ export default function Alleyway({
           type="button"
           className="alleyway-button"
           onClick={onCombat}
+          disabled={combatLoading}
         >
           Fight City Enemy
         </button>
@@ -50,6 +58,7 @@ export default function Alleyway({
           type="button"
           className="alleyway-button"
           onClick={onBossCombat}
+          disabled={combatLoading}
         >
           Challenge City Boss
         </button>

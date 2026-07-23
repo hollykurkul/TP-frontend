@@ -27,12 +27,15 @@ function HeartBar({ current, label, max = MAX_HEARTS }) {
   );
 }
 
-export default function Combat({ character }) {
+export default function Combat({
+  character,
+  playerHearts = MAX_HEARTS,
+  onPlayerHeartsChange = () => {},
+}) {
   const navigate = useNavigate();
   const location = useLocation();
   const enemyName = location.state?.enemyName ?? "Wild Creature";
   const enemyMaxHearts = location.state?.enemyMaxHearts ?? MAX_HEARTS;
-  const [playerHearts, setPlayerHearts] = useState(MAX_HEARTS);
   const [enemyHearts, setEnemyHearts] = useState(enemyMaxHearts);
   const [enemyIntent, setEnemyIntent] = useState(chooseEnemyIntent);
   const [message, setMessage] = useState(
@@ -59,7 +62,7 @@ export default function Combat({ character }) {
         } else {
           nextEnemyHearts = Math.max(0, nextEnemyHearts - 1);
           turnMessages.push(
-            "the enemy tries to block, but you get past their guard",
+            "The enemy tries to block, but you get past their guard.",
           );
         }
       } else {
@@ -85,7 +88,7 @@ export default function Combat({ character }) {
       turnMessages.push("Both fighters block. No hearts are lost.");
     }
 
-    setPlayerHearts(nextPlayerHearts);
+    onPlayerHeartsChange(nextPlayerHearts);
     setEnemyHearts(nextEnemyHearts);
 
     if (nextPlayerHearts === 0) {
