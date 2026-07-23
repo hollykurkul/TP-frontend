@@ -1,4 +1,4 @@
-import "./House.css";
+import "./Front.css";
 
 export default function House() {
   return (

@@ -8,7 +8,7 @@ import Combat from "./combat/Combat.jsx";
 import Pond from "./locations/Forest/Pond/Pond.jsx";
 import Den from "./locations/Forest/Den/Den.jsx";
 import Clearing from "./locations/Forest/Clearing/Clearing.jsx";
-
+import PrologueController from "./locations/Prologue/PrologueController.jsx";
 import BusStop from "./locations/Road/BusStop/BusStop.jsx";
 import Ditch from "./locations/Road/Ditch/Ditch.jsx";
 import RestStop from "./locations/Road/RestStop/RestStop.jsx";
@@ -80,7 +80,9 @@ function MainMenu({ onStartNewGame }) {
 
 function ForestController({ character, onStartCombat }) {
   const location = useLocation();
-  const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "pond");
+  const [currentScene, setCurrentScene] = useState(
+    () => location.state?.scene ?? "pond",
+  );
 
   const handleNavigation = (destination) => {
     setCurrentScene(destination);
@@ -124,7 +126,9 @@ function ForestController({ character, onStartCombat }) {
 
 function RoadController({ character, onStartCombat }) {
   const location = useLocation();
-  const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "busStop");
+  const [currentScene, setCurrentScene] = useState(
+    () => location.state?.scene ?? "busStop",
+  );
 
   const handleNavigation = (destination) => {
     setCurrentScene(destination);
@@ -168,7 +172,9 @@ function RoadController({ character, onStartCombat }) {
 
 function CityController({ character, onStartCombat }) {
   const location = useLocation();
-  const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "cityPark");
+  const [currentScene, setCurrentScene] = useState(
+    () => location.state?.scene ?? "cityPark",
+  );
 
   const handleNavigation = (destination) => {
     setCurrentScene(destination);
@@ -220,7 +226,7 @@ export default function App() {
 
   const handleSelectCharacter = (selectedChar) => {
     setCharacter(selectedChar);
-    navigate("/forest");
+    navigate("/prologue");
   };
 
   const handleStartCombat = (returnLocation) => {
@@ -240,6 +246,15 @@ export default function App() {
           path="/character-select"
           element={
             <CharacterSelect onSelectCharacter={handleSelectCharacter} />
+          }
+        />
+        <Route
+          path="/prologue"
+          element={
+            <PrologueController
+              character={character}
+              onComplete={() => navigate("/forest")}
+            />
           }
         />
         <Route path="/combat" element={<Combat character={character} />} />
