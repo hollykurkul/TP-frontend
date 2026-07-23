@@ -286,6 +286,7 @@ export default function App() {
           ...returnLocation,
           enemyName: enemy.name,
           enemyMaxHearts: enemy.hp,
+          enemyImageUrl: enemy.imageUrl,
         },
       });
     } catch (error) {
