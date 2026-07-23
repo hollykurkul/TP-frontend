@@ -5,10 +5,7 @@ import Register from "./auth/Register";
 import { useState } from "react";
 import CharacterSelect from "./characterSelect/characterSelect.jsx";
 import Combat from "./combat/Combat.jsx";
-import {
-  getBossByLocation,
-  getRandomEnemyByLocation,
-} from "./api/enemies.js";
+import { getBossByLocation, getRandomEnemyByLocation } from "./api/enemies.js";
 import Pond from "./locations/Forest/Pond/Pond.jsx";
 import Den from "./locations/Forest/Den/Den.jsx";
 import Clearing from "./locations/Forest/Clearing/Clearing.jsx";
@@ -21,9 +18,9 @@ import CityPark from "./locations/City/CityPark/CityPark.jsx";
 import EmptyDumpster from "./locations/City/EmptyDumpster/EmptyDumpster.jsx";
 import AlleyWay from "./locations/City/Alleyway/Alleyway.jsx";
 
-const MAX_PLAYER_HEARTS = 3;
+import { useAuth } from "./auth/AuthContext";
 
-function MainMenu({ onStartNewGame }) {
+function MainMenu({ user, onStartNewGame }) {
   return (
     <main className="menu-page">
       <section className="title-section">
@@ -35,50 +32,56 @@ function MainMenu({ onStartNewGame }) {
       </section>
 
       <section className="menu-grid">
-        <section className="menu-panel auth-panel">
-          <h2>Account</h2>
-          <p>Log in to continue your journey or register to begin a new one.</p>
+        {!user ? (
+          <section className="menu-panel auth-panel">
+            <h2>Account</h2>
+            <p>
+              Log in to continue your journey or register to begin a new one.
+            </p>
 
-          <Link className="menu-button" to="/login">
-            Log In
-          </Link>
+            <Link className="menu-button" to="/login">
+              Log In
+            </Link>
 
-          <Link className="menu-button secondary-button" to="/register">
-            Register
-          </Link>
-        </section>
+            <Link className="menu-button secondary-button" to="/register">
+              Register
+            </Link>
+          </section>
+        ) : (
+          <>
+            <section className="menu-panel action-panel">
+              <h2>New Game</h2>
+              <p>Begin a fresh adventure from the first trail marker.</p>
 
-        <section className="menu-panel action-panel">
-          <h2>New Game</h2>
-          <p>Begin a fresh adventure from the first trail marker.</p>
+              <button
+                type="button"
+                className="menu-button"
+                onClick={onStartNewGame}
+              >
+                Start New Game
+              </button>
+            </section>
 
-          <button
-            type="button"
-            className="menu-button"
-            onClick={onStartNewGame}
-          >
-            Start New Game
-          </button>
-        </section>
+            <section className="menu-panel action-panel">
+              <h2>Load Game</h2>
+              <p>Return to a saved adventure.</p>
 
-        <section className="menu-panel action-panel">
-          <h2>Load Game</h2>
-          <p>Return to a saved adventure.</p>
+              <div className="save-slot">
+                <span>Save Slot 1</span>
+                <small>No save loaded yet</small>
+              </div>
 
-          <div className="save-slot">
-            <span>Save Slot 1</span>
-            <small>No save loaded yet</small>
-          </div>
+              <div className="save-slot empty">
+                <span>Save Slot 2</span>
+                <small>Empty</small>
+              </div>
 
-          <div className="save-slot empty">
-            <span>Save Slot 2</span>
-            <small>Empty</small>
-          </div>
-
-          <button type="button" className="menu-button secondary-button">
-            Load Selected Game
-          </button>
-        </section>
+              <button type="button" className="menu-button secondary-button">
+                Load Selected Game
+              </button>
+            </section>
+          </>
+        )}
       </section>
     </main>
   );
@@ -261,7 +264,10 @@ function CityController({
   );
 }
 
+const MAX_PLAYER_HEARTS = 3;
+
 export default function App() {
+  const { user } = useAuth();
   const [character, setCharacter] = useState(null);
   const [playerHearts, setPlayerHearts] = useState(MAX_PLAYER_HEARTS);
   const [combatLoading, setCombatLoading] = useState(false);
@@ -277,7 +283,11 @@ export default function App() {
     navigate("/prologue");
   };
 
-  const handleStartCombat = async ({ locationId, isBoss = false, ...returnLocation }) => {
+  const handleStartCombat = async ({
+    locationId,
+    isBoss = false,
+    ...returnLocation
+  }) => {
     setCombatLoading(true);
     setCombatError("");
 
@@ -312,7 +322,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route
           index
-          element={<MainMenu onStartNewGame={handleStartNewGame} />}
+          element={<MainMenu user={user} onStartNewGame={handleStartNewGame} />}
         />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
