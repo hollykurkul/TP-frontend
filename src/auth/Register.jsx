@@ -16,7 +16,7 @@ export default function Register() {
 
     try {
       await register({ username, password });
-      navigate("/character-select", { replace: true });
+      navigate("/", { replace: true });
     } catch (err) {
       setError(err.message);
     }

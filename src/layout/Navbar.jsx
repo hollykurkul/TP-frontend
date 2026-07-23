@@ -1,5 +1,4 @@
 import { NavLink, useNavigate } from "react-router";
-
 import { useAuth } from "../auth/AuthContext";
 
 export default function Navbar() {
@@ -12,20 +11,24 @@ export default function Navbar() {
   }
 
   return (
-    <header id="navbar">
-      <NavLink id="brand" to="/">
-        <p>Main Menu</p>
-      </NavLink>
+    <header className="main-navbar">
+      <div className="navbar-container">
+        <NavLink className="nav-brand" to="/">
+          Main Menu
+        </NavLink>
 
-      <nav>
-        {token ? (
-          <button type="button" onClick={handleLogout}>
-            Log out
-          </button>
-        ) : (
-          <NavLink to="/login">Log in</NavLink>
-        )}
-      </nav>
+        <nav className="nav-links">
+          {token ? (
+            <button type="button" className="nav-btn" onClick={handleLogout}>
+              Log out
+            </button>
+          ) : (
+            <NavLink className="nav-link" to="/login">
+              Log in
+            </NavLink>
+          )}
+        </nav>
+      </div>
     </header>
   );
 }
