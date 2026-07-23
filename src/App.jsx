@@ -5,6 +5,10 @@ import Register from "./auth/Register";
 import { useState } from "react";
 import CharacterSelect from "./characterSelect/characterSelect.jsx";
 import Combat from "./combat/Combat.jsx";
+import {
+  getBossByLocation,
+  getRandomEnemyByLocation,
+} from "./api/enemies.js";
 import Pond from "./locations/Forest/Pond/Pond.jsx";
 import Den from "./locations/Forest/Den/Den.jsx";
 import Clearing from "./locations/Forest/Clearing/Clearing.jsx";
@@ -16,6 +20,8 @@ import RestStop from "./locations/Road/RestStop/RestStop.jsx";
 import CityPark from "./locations/City/CityPark/CityPark.jsx";
 import EmptyDumpster from "./locations/City/EmptyDumpster/EmptyDumpster.jsx";
 import AlleyWay from "./locations/City/Alleyway/Alleyway.jsx";
+
+const MAX_PLAYER_HEARTS = 3;
 
 function MainMenu({ onStartNewGame }) {
   return (
@@ -78,7 +84,14 @@ function MainMenu({ onStartNewGame }) {
   );
 }
 
-function ForestController({ character, onStartCombat }) {
+function ForestController({
+  character,
+  onStartCombat,
+  onRest,
+  playerHearts,
+  combatLoading,
+  combatError,
+}) {
   const location = useLocation();
   const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "pond");
 
@@ -92,16 +105,22 @@ function ForestController({ character, onStartCombat }) {
         <Pond character={character} onGo={handleNavigation} />
       )}
       {currentScene === "den" && (
-        <Den character={character} onGo={handleNavigation} />
+        <Den
+          character={character}
+          onGo={handleNavigation}
+          onRest={onRest}
+          playerHearts={playerHearts}
+        />
       )}
       {currentScene === "clearing" && (
         <Clearing
           character={character}
           onGo={handleNavigation}
+          combatLoading={combatLoading}
+          combatError={combatError}
           onCombat={() =>
             onStartCombat({
-              enemyName: "Forest Fox",
-              enemyMaxHearts: 3,
+              locationId: 1,
               defeatScene: "den",
               returnTo: "/forest",
               returnScene: "clearing",
@@ -109,8 +128,8 @@ function ForestController({ character, onStartCombat }) {
           }
           onBossCombat={() =>
             onStartCombat({
-              enemyName: "Great Forest Stag",
-              enemyMaxHearts: 5,
+              locationId: 1,
+              isBoss: true,
               defeatScene: "den",
               returnTo: "/forest",
               returnScene: "clearing",
@@ -122,7 +141,14 @@ function ForestController({ character, onStartCombat }) {
   );
 }
 
-function RoadController({ character, onStartCombat }) {
+function RoadController({
+  character,
+  onStartCombat,
+  onRest,
+  playerHearts,
+  combatLoading,
+  combatError,
+}) {
   const location = useLocation();
   const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "busStop");
 
@@ -139,10 +165,11 @@ function RoadController({ character, onStartCombat }) {
         <Ditch
           character={character}
           onGo={handleNavigation}
+          combatLoading={combatLoading}
+          combatError={combatError}
           onCombat={() =>
             onStartCombat({
-              enemyName: "Culvert Creature",
-              enemyMaxHearts: 3,
+              locationId: 2,
               defeatScene: "restStop",
               returnTo: "/road",
               returnScene: "ditch",
@@ -150,8 +177,8 @@ function RoadController({ character, onStartCombat }) {
           }
           onBossCombat={() =>
             onStartCombat({
-              enemyName: "Culvert Beast",
-              enemyMaxHearts: 5,
+              locationId: 2,
+              isBoss: true,
               defeatScene: "restStop",
               returnTo: "/road",
               returnScene: "ditch",
@@ -160,13 +187,25 @@ function RoadController({ character, onStartCombat }) {
         />
       )}
       {currentScene === "restStop" && (
-        <RestStop character={character} onGo={handleNavigation} />
+        <RestStop
+          character={character}
+          onGo={handleNavigation}
+          onRest={onRest}
+          playerHearts={playerHearts}
+        />
       )}
     </div>
   );
 }
 
-function CityController({ character, onStartCombat }) {
+function CityController({
+  character,
+  onStartCombat,
+  onRest,
+  playerHearts,
+  combatLoading,
+  combatError,
+}) {
   const location = useLocation();
   const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "cityPark");
 
@@ -180,16 +219,22 @@ function CityController({ character, onStartCombat }) {
         <CityPark character={character} onGo={handleNavigation} />
       )}
       {currentScene === "emptyDumpster" && (
-        <EmptyDumpster character={character} onGo={handleNavigation} />
+        <EmptyDumpster
+          character={character}
+          onGo={handleNavigation}
+          onRest={onRest}
+          playerHearts={playerHearts}
+        />
       )}
       {currentScene === "alleyWay" && (
         <AlleyWay
           character={character}
           onGo={handleNavigation}
+          combatLoading={combatLoading}
+          combatError={combatError}
           onCombat={() =>
             onStartCombat({
-              enemyName: "Alley Stray",
-              enemyMaxHearts: 3,
+              locationId: 3,
               defeatScene: "emptyDumpster",
               returnTo: "/city",
               returnScene: "alleyWay",
@@ -197,8 +242,8 @@ function CityController({ character, onStartCombat }) {
           }
           onBossCombat={() =>
             onStartCombat({
-              enemyName: "The Night Hound",
-              enemyMaxHearts: 5,
+              locationId: 3,
+              isBoss: true,
               defeatScene: "emptyDumpster",
               returnTo: "/city",
               returnScene: "alleyWay",
@@ -212,6 +257,9 @@ function CityController({ character, onStartCombat }) {
 
 export default function App() {
   const [character, setCharacter] = useState(null);
+  const [playerHearts, setPlayerHearts] = useState(MAX_PLAYER_HEARTS);
+  const [combatLoading, setCombatLoading] = useState(false);
+  const [combatError, setCombatError] = useState("");
   const navigate = useNavigate();
 
   const handleStartNewGame = () => {
@@ -220,11 +268,37 @@ export default function App() {
 
   const handleSelectCharacter = (selectedChar) => {
     setCharacter(selectedChar);
+    setPlayerHearts(MAX_PLAYER_HEARTS);
     navigate("/forest");
   };
 
-  const handleStartCombat = (returnLocation) => {
-    navigate("/combat", { state: returnLocation });
+  const handleStartCombat = async ({ locationId, isBoss = false, ...returnLocation }) => {
+    setCombatLoading(true);
+    setCombatError("");
+
+    try {
+      const enemy = isBoss
+        ? await getBossByLocation(locationId)
+        : await getRandomEnemyByLocation(locationId);
+
+      navigate("/combat", {
+        state: {
+          ...returnLocation,
+          enemyName: enemy.name,
+          enemyMaxHearts: enemy.hp,
+        },
+      });
+    } catch (error) {
+      setCombatError(
+        error instanceof Error ? error.message : "Unable to load an enemy.",
+      );
+    } finally {
+      setCombatLoading(false);
+    }
+  };
+
+  const handleRest = () => {
+    setPlayerHearts(MAX_PLAYER_HEARTS);
   };
 
   return (
@@ -242,13 +316,26 @@ export default function App() {
             <CharacterSelect onSelectCharacter={handleSelectCharacter} />
           }
         />
-        <Route path="/combat" element={<Combat character={character} />} />
+        <Route
+          path="/combat"
+          element={
+            <Combat
+              character={character}
+              playerHearts={playerHearts}
+              onPlayerHeartsChange={setPlayerHearts}
+            />
+          }
+        />
         <Route
           path="/forest"
           element={
             <ForestController
               character={character}
               onStartCombat={handleStartCombat}
+              onRest={handleRest}
+              playerHearts={playerHearts}
+              combatLoading={combatLoading}
+              combatError={combatError}
             />
           }
         />
@@ -258,6 +345,10 @@ export default function App() {
             <RoadController
               character={character}
               onStartCombat={handleStartCombat}
+              onRest={handleRest}
+              playerHearts={playerHearts}
+              combatLoading={combatLoading}
+              combatError={combatError}
             />
           }
         />
@@ -267,6 +358,10 @@ export default function App() {
             <CityController
               character={character}
               onStartCombat={handleStartCombat}
+              onRest={handleRest}
+              playerHearts={playerHearts}
+              combatLoading={combatLoading}
+              combatError={combatError}
             />
           }
         />

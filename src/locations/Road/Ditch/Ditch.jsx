@@ -4,6 +4,8 @@ export default function Ditch({
   onGo = () => {},
   onCombat = () => {},
   onBossCombat = () => {},
+  combatLoading = false,
+  combatError = "",
 }) {
   return (
     <main className="ditch-page">
@@ -30,6 +32,11 @@ export default function Ditch({
         </p>
       </section>
 
+      {(combatLoading || combatError) && (
+        <p role="status" aria-live="polite">
+          {combatLoading ? "Choosing an opponent..." : combatError}
+        </p>
+      )}
       <section className="ditch-choices">
         <button
           type="button"
@@ -42,6 +49,7 @@ export default function Ditch({
           type="button"
           className="ditch-button"
           onClick={onCombat}
+          disabled={combatLoading}
         >
           Fight Road Enemy
         </button>
@@ -49,6 +57,7 @@ export default function Ditch({
           type="button"
           className="ditch-button"
           onClick={onBossCombat}
+          disabled={combatLoading}
         >
           Challenge Road Boss
         </button>
