@@ -5,6 +5,8 @@ export default function Clearing({
   onGo = () => {},
   onCombat = () => {},
   onBossCombat = () => {},
+  combatLoading = false,
+  combatError = "",
 }) {
   return (
     <div className="clearing">
@@ -79,6 +81,11 @@ export default function Clearing({
           feeling exposed.
         </p>
 
+        {(combatLoading || combatError) && (
+          <p role="status" aria-live="polite">
+            {combatLoading ? "Choosing an opponent..." : combatError}
+          </p>
+        )}
         <div className="clearing-actions">
           <button
             type="button"
@@ -92,6 +99,7 @@ export default function Clearing({
             type="button"
             className="clearing-btn"
             onClick={onCombat}
+            disabled={combatLoading}
             style={{ padding: "10px 20px", cursor: "pointer" }}
           >
             Fight Forest Enemy
@@ -100,6 +108,7 @@ export default function Clearing({
             type="button"
             className="clearing-btn"
             onClick={onBossCombat}
+            disabled={combatLoading}
             style={{ padding: "10px 20px", cursor: "pointer" }}
           >
             Challenge Forest Boss

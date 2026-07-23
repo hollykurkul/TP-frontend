@@ -1,7 +1,11 @@
 import { useState } from "react";
 import "./Den.css";
 
-export default function Den({ onGo = () => {}, onRest = () => {} }) {
+export default function Den({
+  onGo = () => {},
+  onRest = () => {},
+  playerHearts = 3,
+}) {
   const [sleeping, setSleeping] = useState(false);
 
   const sleep = () => {
@@ -63,6 +67,9 @@ export default function Den({ onGo = () => {}, onRest = () => {} }) {
       <div className="den-ui">
         <h1 className="den-title">Den</h1>
         <p className="den-desc">A safe haven where you can rest and recover</p>
+        <p className="den-desc" aria-live="polite">
+          Health: {playerHearts}/3
+        </p>
         <div className="den-actions">
           <button className="den-btn" onClick={sleep} disabled={sleeping}>
             {sleeping ? "Sleeping..." : "Sleep (restore HP)"}
