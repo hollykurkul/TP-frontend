@@ -1,8 +1,11 @@
 import "./Front.css";
 
-export default function House() {
+export default function House({
+  characterName = "Buddy",
+  onComplete = () => {},
+}) {
   return (
-    <div className="house">
+    <main className="house">
       <div className="house-scene">
         <div className="star" style={{ top: 36, left: 60 }} />
         <div
@@ -56,6 +59,19 @@ export default function House() {
         <div className="bush" style={{ left: 160 }} />
         <div className="bush bush-small" style={{ right: 160 }} />
       </div>
-    </div>
+
+      <section className="front-storybox">
+        <p className="front-eyebrow">The journey begins</p>
+        <h1>Beyond the Front Yard</h1>
+        <p>
+          Startled by the storm, {characterName} races down the path and through
+          the open gate. The familiar porch light grows smaller behind you as a
+          trail of pawprints leads toward the dark line of trees.
+        </p>
+        <button type="button" className="front-continue" onClick={onComplete}>
+          Follow the trail into the forest
+        </button>
+      </section>
+    </main>
   );
 }

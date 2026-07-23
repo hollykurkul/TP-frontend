@@ -30,7 +30,7 @@ const CHARACTERS = [
     description:
       "As affectionate as he is clever, this tuxedo balances a brilliant and calculating mind with a deeply loving heart. Always figuring out the smartest way to handle trouble, but just as quick to cuddle up when the dust settles!",
     image:
-      "https://cdn.discordapp.com/attachments/1523867510359720010/1524943777134018631/Ajax_asset.png?ex=6a5f6dd0&is=6a5e1c50&hm=6f8a5e895931d7c2111837416c38008a9068bded8c5cd3f1ef637295a155ae1c&",
+      "https://cdn.discordapp.com/attachments/1523867510359720010/1526381991862472704/1225AD3D-7550-4EEE-8ADC-866AE00EF7DC.png?ex=6a5f6341&is=6a5e11c1&hm=72245e0a08849918059906f4535582055b0adda21bfd796995328a68d9162d05&",
   },
   {
     id: "ajax",
@@ -38,7 +38,7 @@ const CHARACTERS = [
     description:
       "A wild little spitfire with boundless energy. He's a little stinker, but he'll steal your heart!",
     image:
-      "https://cdn.discordapp.com/attachments/1523867510359720010/1526381991862472704/1225AD3D-7550-4EEE-8ADC-866AE00EF7DC.png?ex=6a5f6341&is=6a5e11c1&hm=72245e0a08849918059906f4535582055b0adda21bfd796995328a68d9162d05&",
+      "https://cdn.discordapp.com/attachments/1523867510359720010/1524943777134018631/Ajax_asset.png?ex=6a5f6dd0&is=6a5e1c50&hm=6f8a5e895931d7c2111837416c38008a9068bded8c5cd3f1ef637295a155ae1c&",
   },
   {
     id: "lincoln",

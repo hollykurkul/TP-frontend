@@ -274,6 +274,7 @@ export default function App() {
 
   const handleSelectCharacter = (selectedChar) => {
     setCharacter(selectedChar);
+    setPlayerHearts(MAX_PLAYER_HEARTS);
     navigate("/prologue");
   };
 
@@ -326,12 +327,26 @@ export default function App() {
           path="/prologue"
           element={
             <PrologueController
-              character={character}
-              onComplete={() => navigate("/forest")}
+              characterName={character?.name}
+              onComplete={() =>
+                navigate("/forest", {
+                  replace: true,
+                  state: { scene: "pond" },
+                })
+              }
             />
           }
         />
-        <Route path="/combat" element={<Combat character={character} />} />
+        <Route
+          path="/combat"
+          element={
+            <Combat
+              character={character}
+              playerHearts={playerHearts}
+              onPlayerHeartsChange={setPlayerHearts}
+            />
+          }
+        />
         <Route
           path="/forest"
           element={
