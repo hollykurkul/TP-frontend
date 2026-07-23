@@ -87,6 +87,11 @@ h1 {
   object-fit: cover;
 }
 
+.enemy-avatar {
+  padding: 10px;
+  object-fit: contain;
+}
+
 .enemy-placeholder {
   color: #f2c879;
   font-size: 5rem;

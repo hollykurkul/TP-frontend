@@ -36,6 +36,7 @@ export default function Combat({
   const location = useLocation();
   const enemyName = location.state?.enemyName ?? "Wild Creature";
   const enemyMaxHearts = location.state?.enemyMaxHearts ?? MAX_HEARTS;
+  const enemyImageUrl = location.state?.enemyImageUrl;
   const [enemyHearts, setEnemyHearts] = useState(enemyMaxHearts);
   const [enemyIntent, setEnemyIntent] = useState(chooseEnemyIntent);
   const [message, setMessage] = useState(
@@ -142,8 +143,16 @@ export default function Combat({
         <div className="versus">VS</div>
 
         <article className="fighter-card enemy-card">
-          <div className="avatar-frame enemy-placeholder" aria-hidden="true">
-            ?
+          <div className="avatar-frame enemy-placeholder">
+            {enemyImageUrl ? (
+              <img
+                className="combat-avatar enemy-avatar"
+                src={enemyImageUrl}
+                alt={`${enemyName} portrait`}
+              />
+            ) : (
+              <span aria-hidden="true">?</span>
+            )}
           </div>
           <h2>{enemyName}</h2>
           <HeartBar

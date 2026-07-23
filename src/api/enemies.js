@@ -13,14 +13,22 @@ async function requestCombatant(path) {
 
 function normalizeCombatant(combatant) {
   const hp = Number(combatant?.hp);
+  const imageUrl = combatant?.image_url ?? combatant?.imageUrl;
 
-  if (!combatant?.name || !Number.isInteger(hp) || hp < 1) {
+  if (
+    !combatant?.name ||
+    !Number.isInteger(hp) ||
+    hp < 1 ||
+    typeof imageUrl !== "string" ||
+    imageUrl.trim() === ""
+  ) {
     throw new Error("The backend returned invalid enemy data.");
   }
 
   return {
     ...combatant,
     hp,
+    imageUrl,
   };
 }
 
