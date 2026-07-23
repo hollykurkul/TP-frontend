@@ -12,7 +12,7 @@ import {
 import Pond from "./locations/Forest/Pond/Pond.jsx";
 import Den from "./locations/Forest/Den/Den.jsx";
 import Clearing from "./locations/Forest/Clearing/Clearing.jsx";
-
+import PrologueController from "./locations/Prologue/PrologueController.jsx";
 import BusStop from "./locations/Road/BusStop/BusStop.jsx";
 import Ditch from "./locations/Road/Ditch/Ditch.jsx";
 import RestStop from "./locations/Road/RestStop/RestStop.jsx";
@@ -93,7 +93,9 @@ function ForestController({
   combatError,
 }) {
   const location = useLocation();
-  const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "pond");
+  const [currentScene, setCurrentScene] = useState(
+    () => location.state?.scene ?? "pond",
+  );
 
   const handleNavigation = (destination) => {
     setCurrentScene(destination);
@@ -150,7 +152,9 @@ function RoadController({
   combatError,
 }) {
   const location = useLocation();
-  const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "busStop");
+  const [currentScene, setCurrentScene] = useState(
+    () => location.state?.scene ?? "busStop",
+  );
 
   const handleNavigation = (destination) => {
     setCurrentScene(destination);
@@ -207,7 +211,9 @@ function CityController({
   combatError,
 }) {
   const location = useLocation();
-  const [currentScene, setCurrentScene] = useState(() => location.state?.scene ?? "cityPark");
+  const [currentScene, setCurrentScene] = useState(
+    () => location.state?.scene ?? "cityPark",
+  );
 
   const handleNavigation = (destination) => {
     setCurrentScene(destination);
@@ -268,8 +274,7 @@ export default function App() {
 
   const handleSelectCharacter = (selectedChar) => {
     setCharacter(selectedChar);
-    setPlayerHearts(MAX_PLAYER_HEARTS);
-    navigate("/forest");
+    navigate("/prologue");
   };
 
   const handleStartCombat = async ({ locationId, isBoss = false, ...returnLocation }) => {
@@ -317,15 +322,15 @@ export default function App() {
           }
         />
         <Route
-          path="/combat"
+          path="/prologue"
           element={
-            <Combat
+            <PrologueController
               character={character}
-              playerHearts={playerHearts}
-              onPlayerHeartsChange={setPlayerHearts}
+              onComplete={() => navigate("/forest")}
             />
           }
         />
+        <Route path="/combat" element={<Combat character={character} />} />
         <Route
           path="/forest"
           element={
