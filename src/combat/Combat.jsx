@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
+import { rollForItemDrop } from "../api/inventory.js";
+import { useAuth } from "../auth/AuthContext.jsx";
+import Inventory from "../inventory/Inventory.jsx";
 import "./combat.css";
 
 const MAX_HEARTS = 3;
@@ -34,20 +37,24 @@ export default function Combat({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { token } = useAuth();
   const enemyName = location.state?.enemyName ?? "Wild Creature";
   const enemyMaxHearts = location.state?.enemyMaxHearts ?? MAX_HEARTS;
   const enemyImageUrl = location.state?.enemyImageUrl;
+  const combatLocationId = Number(location.state?.locationId);
   const [enemyHearts, setEnemyHearts] = useState(enemyMaxHearts);
   const [enemyIntent, setEnemyIntent] = useState(chooseEnemyIntent);
   const [message, setMessage] = useState(
     "The creature watches you carefully. Choose your move.",
   );
+  const [inventoryOpen, setInventoryOpen] = useState(false);
+  const [dropPending, setDropPending] = useState(false);
 
   const combatEnded = playerHearts === 0 || enemyHearts === 0;
   const playerName = character?.name ?? "Adventurer";
   const playerImage = character?.image;
 
-  function takeTurn(playerAction) {
+  async function takeTurn(playerAction) {
     if (combatEnded) return;
 
     let nextPlayerHearts = playerHearts;
@@ -73,8 +80,31 @@ export default function Combat({
     }
 
     if (nextEnemyHearts === 0) {
+      const victoryMessage = `${turnMessages.join(" ")} You won the fight!`;
       setEnemyHearts(0);
-      setMessage(`${turnMessages.join(" ")} You won the fight!`);
+      setMessage(victoryMessage);
+
+      if (!token || !Number.isInteger(combatLocationId)) return;
+
+      setDropPending(true);
+      setMessage(`${victoryMessage} Checking the enemy for loot...`);
+
+      try {
+        const drop = await rollForItemDrop(combatLocationId, token);
+        setMessage(
+          drop.dropped
+            ? `${victoryMessage} ${drop.item.name} dropped and was added to your inventory!`
+            : `${victoryMessage} The enemy did not drop an item.`,
+        );
+      } catch (error) {
+        setMessage(
+          `${victoryMessage} ${
+            error instanceof Error ? error.message : "Unable to check for loot."
+          }`,
+        );
+      } finally {
+        setDropPending(false);
+      }
       return;
     }
 
@@ -188,10 +218,33 @@ export default function Combat({
         >
           Block
         </button>
-        <button type="button" className="danger-button" onClick={flee}>
-          {enemyHearts === 0 ? "Return" : "Flee"}
+        <button
+          type="button"
+          className="secondary-button"
+          onClick={() => setInventoryOpen(true)}
+        >
+          Inventory
+        </button>
+        <button
+          type="button"
+          className="danger-button"
+          disabled={dropPending}
+          onClick={flee}
+        >
+          {dropPending ? "Checking for loot..." : enemyHearts === 0 ? "Return" : "Flee"}
         </button>
       </section>
+
+      {inventoryOpen && (
+        <div className="combat-inventory-overlay" role="dialog" aria-modal="true">
+          <Inventory
+            embedded
+            onClose={() => setInventoryOpen(false)}
+            playerHearts={playerHearts}
+            onPlayerHeartsChange={onPlayerHeartsChange}
+          />
+        </div>
+      )}
     </main>
   );
 }

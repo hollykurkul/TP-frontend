@@ -16,6 +16,45 @@
   overflow: hidden;
 }
 
+.front-storybox {
+  position: absolute;
+  z-index: 2;
+  right: 24px;
+  bottom: 24px;
+  left: 24px;
+  padding: 22px;
+  color: #f6eedc;
+  background: rgba(10, 14, 34, 0.9);
+  border: 1px solid rgba(255, 217, 138, 0.55);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+.front-storybox h1 {
+  margin: 0 0 10px;
+  font-size: clamp(1.8rem, 5vw, 2.7rem);
+}
+
+.front-storybox p {
+  margin: 0 0 16px;
+  line-height: 1.55;
+}
+
+.front-storybox .front-eyebrow {
+  margin-bottom: 6px;
+  color: #ffd98a;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.front-continue {
+  width: 100%;
+  color: #241b2c;
+  background: #ffd98a;
+}
+
 .star {
   position: absolute;
   width: 3px;
@@ -230,6 +269,11 @@
 }
 
 @media (max-width: 480px) {
+  .front-storybox {
+    right: 14px;
+    bottom: 14px;
+    left: 14px;
+  }
   .house-body {
     width: 280px;
   }
