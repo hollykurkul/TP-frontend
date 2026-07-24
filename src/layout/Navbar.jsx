@@ -19,9 +19,14 @@ export default function Navbar() {
 
         <nav className="nav-links">
           {token ? (
-            <button type="button" className="nav-btn" onClick={handleLogout}>
-              Log out
-            </button>
+            <>
+              <NavLink className="nav-link" to="/inventory">
+                Inventory
+              </NavLink>
+              <button type="button" className="nav-btn" onClick={handleLogout}>
+                Log out
+              </button>
+            </>
           ) : (
             <NavLink className="nav-link" to="/login">
               Log in

@@ -5,6 +5,7 @@ import Register from "./auth/Register";
 import { useState } from "react";
 import CharacterSelect from "./characterSelect/characterSelect.jsx";
 import Combat from "./combat/Combat.jsx";
+import Inventory from "./inventory/Inventory.jsx";
 import { getBossByLocation, getRandomEnemyByLocation } from "./api/enemies.js";
 import Pond from "./locations/Forest/Pond/Pond.jsx";
 import Den from "./locations/Forest/Den/Den.jsx";
@@ -300,6 +301,7 @@ export default function App() {
       navigate("/combat", {
         state: {
           ...returnLocation,
+          locationId,
           enemyName: enemy.name,
           enemyMaxHearts: enemy.hp,
           enemyImageUrl: enemy.imageUrl,
@@ -344,6 +346,15 @@ export default function App() {
                   state: { scene: "pond" },
                 })
               }
+            />
+          }
+        />
+        <Route
+          path="/inventory"
+          element={
+            <Inventory
+              playerHearts={playerHearts}
+              onPlayerHeartsChange={setPlayerHearts}
             />
           }
         />

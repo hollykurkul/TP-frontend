@@ -29,6 +29,12 @@ body,
   align-items: center;
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
 .nav-brand,
 .nav-link {
   color: #f8f1df;
