@@ -107,6 +107,18 @@ button {
   cursor: pointer;
 }
 
+.character-status {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  color: #f2c879;
+  text-align: center;
+}
+
+.character-error {
+  color: #ffb4a8;
+}
+
 button:hover {
   background: #ffd98d;
 }
