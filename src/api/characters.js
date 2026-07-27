@@ -1,4 +1,6 @@
-const API_ORIGIN = import.meta.env.VITE_API ?? "http://127.0.0.1:3000";
+const API_ORIGIN = (
+  import.meta.env.VITE_API ?? "http://127.0.0.1:3000"
+).replace(/\/+$/, "");
 const API_URL = `${API_ORIGIN}/characters`;
 
 function normalizeCharacter(character) {
