@@ -1,4 +1,6 @@
-const API_ORIGIN = import.meta.env.VITE_API ?? "http://127.0.0.1:3000";
+const API_ORIGIN = (
+  import.meta.env.VITE_API ?? "http://127.0.0.1:3000"
+).replace(/\/+$/, "");
 
 async function requestCombatant(path) {
   const response = await fetch(`${API_ORIGIN}${path}`);
@@ -11,24 +13,38 @@ async function requestCombatant(path) {
   return response.json();
 }
 
-function normalizeCombatant(combatant) {
+function getImageVersion(imageUrl) {
+  const driveFileMatch =
+    /drive\.google\.com\/file\/d\/([^/]+)/.exec(imageUrl ?? "");
+
+  return driveFileMatch?.[1] ?? imageUrl;
+}
+
+function normalizeCombatant(combatant, resourceName) {
+  const id = Number(combatant?.id);
   const hp = Number(combatant?.hp);
-  const imageUrl = combatant?.image_url ?? combatant?.imageUrl;
+  const sourceImageUrl = combatant?.image_url ?? combatant?.imageUrl;
+  const imageVersion = getImageVersion(sourceImageUrl);
 
   if (
     !combatant?.name ||
+    !Number.isInteger(id) ||
+    id < 1 ||
     !Number.isInteger(hp) ||
     hp < 1 ||
-    typeof imageUrl !== "string" ||
-    imageUrl.trim() === ""
+    typeof imageVersion !== "string" ||
+    imageVersion.trim() === ""
   ) {
     throw new Error("The backend returned invalid enemy data.");
   }
 
   return {
     ...combatant,
+    id,
     hp,
-    imageUrl,
+    imageUrl: `${API_ORIGIN}/${resourceName}/${id}/image?v=${encodeURIComponent(
+      imageVersion,
+    )}`,
   };
 }
 
@@ -42,10 +58,10 @@ export async function getRandomEnemyByLocation(locationId) {
   }
 
   const randomIndex = Math.floor(Math.random() * enemies.length);
-  return normalizeCombatant(enemies[randomIndex]);
+  return normalizeCombatant(enemies[randomIndex], "enemies");
 }
 
 export async function getBossByLocation(locationId) {
   const boss = await requestCombatant(`/bosses/location/${locationId}`);
-  return normalizeCombatant(boss);
+  return normalizeCombatant(boss, "bosses");
 }
