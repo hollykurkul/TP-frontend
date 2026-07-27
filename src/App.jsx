@@ -139,6 +139,8 @@ function ForestController({
               defeatScene: "den",
               returnTo: "/forest",
               returnScene: "clearing",
+              victoryTo: "/road",
+              victoryScene: "busStop",
             })
           }
         />
@@ -190,6 +192,8 @@ function RoadController({
               defeatScene: "restStop",
               returnTo: "/road",
               returnScene: "ditch",
+              victoryTo: "/city",
+              victoryScene: "cityPark",
             })
           }
         />
@@ -301,6 +305,7 @@ export default function App() {
       navigate("/combat", {
         state: {
           ...returnLocation,
+          isBoss,
           locationId,
           enemyName: enemy.name,
           enemyMaxHearts: enemy.hp,

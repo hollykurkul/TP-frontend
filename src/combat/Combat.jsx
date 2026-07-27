@@ -42,6 +42,10 @@ export default function Combat({
   const enemyMaxHearts = location.state?.enemyMaxHearts ?? MAX_HEARTS;
   const enemyImageUrl = location.state?.enemyImageUrl;
   const combatLocationId = Number(location.state?.locationId);
+  const isBoss = Boolean(location.state?.isBoss);
+  const victoryTo = location.state?.victoryTo;
+  const victoryScene = location.state?.victoryScene;
+
   const [enemyHearts, setEnemyHearts] = useState(enemyMaxHearts);
   const [enemyIntent, setEnemyIntent] = useState(chooseEnemyIntent);
   const [message, setMessage] = useState(
@@ -133,7 +137,15 @@ export default function Combat({
     setMessage(turnMessages.join(" "));
   }
 
-  function flee() {
+  function exitCombat() {
+    if (enemyHearts === 0 && isBoss && victoryTo) {
+      navigate(victoryTo, {
+        replace: true,
+        state: victoryScene ? { scene: victoryScene } : undefined,
+      });
+      return;
+    }
+
     const returnTo = location.state?.returnTo ?? "/forest";
     const returnScene = location.state?.returnScene;
     const defeatScene = location.state?.defeatScene;
@@ -229,9 +241,15 @@ export default function Combat({
           type="button"
           className="danger-button"
           disabled={dropPending}
-          onClick={flee}
+          onClick={exitCombat}
         >
-          {dropPending ? "Checking for loot..." : enemyHearts === 0 ? "Return" : "Flee"}
+          {dropPending
+            ? "Checking for loot..."
+            : enemyHearts === 0
+              ? isBoss && victoryTo
+                ? "Proceed"
+                : "Return"
+              : "Flee"}
         </button>
       </section>
 
