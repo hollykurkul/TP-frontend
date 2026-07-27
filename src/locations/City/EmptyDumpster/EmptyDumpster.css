@@ -243,3 +243,121 @@
     left: 30px;
   }
 }
+
+/*
+ * This component originally used different root class names than its JSX.
+ * Keep these rules scoped so the decorative scene cannot cover the controls
+ * or inherit the Alleyway's similarly named scenery styles.
+ */
+.emptydumpster-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #e8e4dc;
+}
+
+.emptydumpster-scene {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0b0e1a 0%, #141726 55%, #1c1f2e 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+
+.emptydumpster-scene .streetlight {
+  top: 0;
+  right: 26%;
+  left: auto;
+  width: 4px;
+  height: 90px;
+}
+
+.emptydumpster-scene .light-cone {
+  top: 90px;
+  left: -70px;
+  width: 144px;
+  height: 320px;
+}
+
+.emptydumpster-scene .big-dumpster {
+  bottom: 54px;
+}
+
+.emptydumpster-scene .crumpled-paper {
+  bottom: 42px;
+}
+
+.emptydumpster-scene .bottle {
+  bottom: 40px;
+}
+
+.emptydumpster-scene .puddle {
+  bottom: 18px;
+  left: 30%;
+  width: 200px;
+  height: 28px;
+}
+
+.emptydumpster-scene .fog {
+  bottom: 0;
+  height: 100px;
+}
+
+.emptydumpster-text {
+  margin-top: 20px;
+}
+
+.emptydumpster-text .eyebrow {
+  margin-bottom: 4px;
+  color: #aeb6c8;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.emptydumpster-text h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+}
+
+.emptydumpster-text p {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.emptydumpster-choices {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.emptydumpster-button {
+  padding: 12px 18px;
+  border: 2px solid #4f8a70;
+  border-radius: 10px;
+  background: #f4e9d4;
+  color: #24362e;
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+
+.emptydumpster-button:hover,
+.emptydumpster-button:focus-visible {
+  background: #dfd4bc;
+  transform: translateX(4px);
+}
+
+.emptydumpster-button:active {
+  transform: translateX(2px) scale(0.99);
+}

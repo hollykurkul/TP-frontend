@@ -49,14 +49,18 @@ export default function EmptyDumpster({
           surprisingly dry and sheltered, making it a quiet corner to tuck away
           from the busy streets.
         </p>
-        <p role="status">
+        <p role="status" aria-live="polite">
           Health: {playerHearts}/3. {restMessage}
         </p>
       </section>
 
       <section className="emptydumpster-choices">
-        <button type="button" className="emptydumpster-button" onClick={handleRest}>
-          Curl up and rest (restore HP)
+        <button
+          type="button"
+          className="emptydumpster-button"
+          onClick={handleRest}
+        >
+          {restMessage ? "HP restored" : "Curl up and rest (restore HP)"}
         </button>
 
         <button

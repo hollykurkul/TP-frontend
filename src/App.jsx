@@ -308,6 +308,9 @@ export default function App() {
           isBoss,
           locationId,
           enemyName: enemy.name,
+          playerName: character?.name,
+          playerImageUrl:
+            character?.image ?? character?.imageUrl ?? character?.image_url,
           enemyMaxHearts: enemy.hp,
           enemyImageUrl: enemy.imageUrl,
         },

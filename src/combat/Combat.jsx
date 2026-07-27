@@ -55,8 +55,13 @@ export default function Combat({
   const [dropPending, setDropPending] = useState(false);
 
   const combatEnded = playerHearts === 0 || enemyHearts === 0;
-  const playerName = character?.name ?? "Adventurer";
-  const playerImage = character?.image;
+  const playerName =
+    location.state?.playerName ?? character?.name ?? "Adventurer";
+  const playerImage =
+    location.state?.playerImageUrl ??
+    character?.image ??
+    character?.imageUrl ??
+    character?.image_url;
 
   async function takeTurn(playerAction) {
     if (combatEnded) return;
