@@ -8,7 +8,9 @@ import "./Inventory.css";
 const DEFAULT_MAX_HP = 3;
 
 function getHealingAmount(item) {
-  const match = /^Restores\s+(\d+)\s+heart/i.exec(item?.effect ?? "");
+  const match = /^Restores\s+(\d+)\s+(?:hp|hearts?)\b/i.exec(
+    String(item?.effect ?? "").trim(),
+  );
   return match ? Number(match[1]) : 0;
 }
 
@@ -42,10 +44,16 @@ export default function Inventory({
         const inventoryItems = await getInventory(token);
         if (!active) return;
         setItems(inventoryItems);
-        setSelectedItemId((currentId) => currentId ?? inventoryItems[0]?.id ?? null);
+        setSelectedItemId(
+          (currentId) => currentId ?? inventoryItems[0]?.id ?? null,
+        );
       } catch (error) {
         if (active) {
-          setMessage(error instanceof Error ? error.message : "Unable to load inventory.");
+          setMessage(
+            error instanceof Error
+              ? error.message
+              : "Unable to load inventory.",
+          );
         }
       } finally {
         if (active) setLoading(false);
@@ -75,18 +83,20 @@ export default function Inventory({
     try {
       const result = await consumeHealingItem(selectedItem.id, token);
       const nextHp = Math.min(maxHp, currentHp + result.healingAmount);
-      const remainingItems = items.filter((item) => item.id !== selectedItem.id);
+      const remainingItems = items.filter(
+        (item) => item.id !== selectedItem.id,
+      );
 
       onHealthChange(nextHp);
       setItems(remainingItems);
       setSelectedItemId(remainingItems[0]?.id ?? null);
       setMessage(
-        `${result.item.name} restored ${nextHp - currentHp} heart${
-          nextHp - currentHp === 1 ? "" : "s"
-        }.`,
+        `${result.item.name} restored ${nextHp - currentHp} HP.`,
       );
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Unable to use that item.");
+      setMessage(
+        error instanceof Error ? error.message : "Unable to use that item.",
+      );
     } finally {
       setUsingItem(false);
     }
@@ -97,11 +107,15 @@ export default function Inventory({
 
     const equipping = equippedWeaponId !== selectedItem.id;
     setEquippedWeaponId(equipping ? selectedItem.id : null);
-    setMessage(`${selectedItem.name} ${equipping ? "equipped" : "unequipped"}.`);
+    setMessage(
+      `${selectedItem.name} ${equipping ? "equipped" : "unequipped"}.`,
+    );
   }
 
   return (
-    <section className={`inventory-page${embedded ? " inventory-embedded" : ""}`}>
+    <section
+      className={`inventory-page${embedded ? " inventory-embedded" : ""}`}
+    >
       <header className="inventory-header">
         <div>
           <p className="inventory-eyebrow">Satchel</p>
@@ -125,7 +139,10 @@ export default function Inventory({
         <p className="inventory-status">Loading inventory...</p>
       ) : (
         <div className="inventory-layout">
-          <section className="inventory-list-panel" aria-label="Inventory items">
+          <section
+            className="inventory-list-panel"
+            aria-label="Inventory items"
+          >
             <div className="inventory-panel-heading">
               <h2>Items</h2>
               <span>{items.length} owned</span>
@@ -162,7 +179,10 @@ export default function Inventory({
               <>
                 <div className="inventory-art">
                   {selectedItem.imageUrl ? (
-                    <img src={selectedItem.imageUrl} alt={`${selectedItem.name} item`} />
+                    <img
+                      src={selectedItem.imageUrl}
+                      alt={`${selectedItem.name} item`}
+                    />
                   ) : (
                     <span>No item art</span>
                   )}
@@ -170,7 +190,9 @@ export default function Inventory({
                 <p className="inventory-item-type">{selectedItem.type}</p>
                 <h2>{selectedItem.name}</h2>
                 <p>{selectedItem.description}</p>
-                <p className="inventory-effect">Effect: {selectedItem.effect}</p>
+                <p className="inventory-effect">
+                  Effect: {selectedItem.effect}
+                </p>
 
                 {healingAmount > 0 ? (
                   <button
@@ -182,7 +204,7 @@ export default function Inventory({
                       ? "Health is already full"
                       : usingItem
                         ? "Using item..."
-                        : `Use and restore ${healingAmount} heart${healingAmount === 1 ? "" : "s"}`}
+                        : `Use and restore ${healingAmount} HP`}
                   </button>
                 ) : selectedItem.canEquip ? (
                   <button type="button" onClick={handleToggleEquip}>
