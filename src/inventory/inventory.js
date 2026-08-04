@@ -27,7 +27,7 @@ const itemCatalog = {
     id: "Berries",
     name: "Berries",
     type: "Consumable",
-    effect: "Restores 1 heart",
+    effect: "Restores 1 health",
     description: "A handful of juicy berries. Naturally sweet and filling.",
     imageUrl:
       "https://static.vecteezy.com/system/resources/thumbnails/053/811/570/small/3d-render-of-juicy-purple-berries-png.png",
@@ -38,7 +38,7 @@ const itemCatalog = {
     id: "Fish",
     name: "Fish",
     type: "Consumable",
-    effect: "Restores 2 hearts",
+    effect: "Restores 2 health",
     description: "A fresh fish, still wriggling. It smells of the stream.",
     imageUrl:
       "https://static.vecteezy.com/system/resources/thumbnails/048/718/584/small/fish-on-transparent-background-free-png.png",
@@ -49,7 +49,7 @@ const itemCatalog = {
     id: "Apple",
     name: "Apple",
     type: "Consumable",
-    effect: "Restores 1 heart",
+    effect: "Restores 1 health",
     description: "A crisp, red apple. Sweet and satisfying.",
     imageUrl:
       "https://static.vecteezy.com/system/resources/thumbnails/067/874/485/small/fresh-red-apple-with-green-leaf-free-png.png",
@@ -103,7 +103,7 @@ const itemCatalog = {
     id: "cactusFruit",
     name: "Cactus Fruit",
     type: "Consumable",
-    effect: "Restores 1 heart",
+    effect: "Restores 1 health",
     description:
       "A spiky fruit that yields a sweet, refreshing juice. its the quenchiest",
     imageUrl:
@@ -115,7 +115,7 @@ const itemCatalog = {
     id: "waterBottle",
     name: "Water Bottle",
     type: "Consumable",
-    effect: "Restores 2 hearts",
+    effect: "Restores 2 health",
     description: "An abandoned bottle filled with clean water.",
     imageUrl:
       "https://png.pngtree.com/png-vector/20250325/ourmid/pngtree-water-bottle-png-image_15868794.png",
@@ -126,7 +126,7 @@ const itemCatalog = {
     id: "roadKill",
     name: "Road Kill",
     type: "Consumable",
-    effect: "Restores 1 heart",
+    effect: "Restores 1 health",
     description:
       "A small body of an animal that has been hit by a vehicle. still warm",
     imageUrl:
@@ -171,7 +171,7 @@ const itemCatalog = {
     id: "fastFoodBag",
     name: "Fast Food Bag",
     type: "Consumable",
-    effect: "Restores 1 heart",
+    effect: "Restores 1 health",
     description:
       "A bag of fast food. Not very nutritious, but filling and delicious.",
     imageUrl:
@@ -183,7 +183,7 @@ const itemCatalog = {
     id: "lunchBox",
     name: "Lunch Box",
     type: "Consumable",
-    effect: "Restores 2 hearts",
+    effect: "Restores 2 health",
     description:
       "A packed lunch box with a variety of food items. A hearty meal for the journey.",
     imageUrl:
@@ -195,7 +195,7 @@ const itemCatalog = {
     id: "thrownOutFood",
     name: "Thrown Out Food",
     type: "Consumable",
-    effect: "Restores 1 heart",
+    effect: "Restores 1 health",
     description:
       "A piece of food that has been discarded in the dump. Still edible, but not very appetizing.",
     imageUrl:
