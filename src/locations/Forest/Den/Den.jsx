@@ -4,7 +4,8 @@ import "./Den.css";
 export default function Den({
   onGo = () => {},
   onRest = () => {},
-  playerHearts = 3,
+  currentHp = 3,
+  maxHp = 3,
 }) {
   const [sleeping, setSleeping] = useState(false);
 
@@ -68,7 +69,7 @@ export default function Den({
         <h1 className="den-title">Den</h1>
         <p className="den-desc">A safe haven where you can rest and recover</p>
         <p className="den-desc" aria-live="polite">
-          Health: {playerHearts}/3
+          Health: {currentHp}/{maxHp}
         </p>
         <div className="den-actions">
           <button className="den-btn" onClick={sleep} disabled={sleeping}>

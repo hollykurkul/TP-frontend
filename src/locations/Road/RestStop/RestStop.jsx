@@ -4,7 +4,8 @@ import "./RestStop.css";
 export default function RestStop({
   onGo = () => {},
   onRest = () => {},
-  playerHearts = 3,
+  currentHp = 3,
+  maxHp = 3,
 }) {
   const [restMessage, setRestMessage] = useState("");
 
@@ -41,7 +42,7 @@ export default function RestStop({
           vending machine. Nobody around. A safe place to catch your breath.
         </p>
         <p role="status">
-          Health: {playerHearts}/3. {restMessage}
+          Health: {currentHp}/{maxHp}. {restMessage}
         </p>
       </section>
 

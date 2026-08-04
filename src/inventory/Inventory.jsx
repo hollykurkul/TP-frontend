@@ -5,7 +5,7 @@ import { consumeHealingItem, getInventory } from "../api/inventory.js";
 import { useAuth } from "../auth/AuthContext.jsx";
 import "./Inventory.css";
 
-const MAX_PLAYER_HEARTS = 3;
+const DEFAULT_MAX_HP = 3;
 
 function getHealingAmount(item) {
   const match = /^Restores\s+(\d+)\s+heart/i.exec(item?.effect ?? "");
@@ -15,8 +15,9 @@ function getHealingAmount(item) {
 export default function Inventory({
   embedded = false,
   onClose,
-  playerHearts = MAX_PLAYER_HEARTS,
-  onPlayerHeartsChange = () => {},
+  currentHp = DEFAULT_MAX_HP,
+  maxHp = DEFAULT_MAX_HP,
+  onHealthChange = () => {},
 }) {
   const navigate = useNavigate();
   const { token } = useAuth();
@@ -63,7 +64,7 @@ export default function Inventory({
   );
   const healingAmount = getHealingAmount(selectedItem);
   const canHeal =
-    selectedItem?.canUse && healingAmount > 0 && playerHearts < MAX_PLAYER_HEARTS;
+    selectedItem?.canUse && healingAmount > 0 && currentHp < maxHp;
 
   async function handleUseItem() {
     if (!selectedItem || !token || !canHeal || usingItem) return;
@@ -73,18 +74,15 @@ export default function Inventory({
 
     try {
       const result = await consumeHealingItem(selectedItem.id, token);
-      const nextHearts = Math.min(
-        MAX_PLAYER_HEARTS,
-        playerHearts + result.healingAmount,
-      );
+      const nextHp = Math.min(maxHp, currentHp + result.healingAmount);
       const remainingItems = items.filter((item) => item.id !== selectedItem.id);
 
-      onPlayerHeartsChange(nextHearts);
+      onHealthChange(nextHp);
       setItems(remainingItems);
       setSelectedItemId(remainingItems[0]?.id ?? null);
       setMessage(
-        `${result.item.name} restored ${nextHearts - playerHearts} heart${
-          nextHearts - playerHearts === 1 ? "" : "s"
+        `${result.item.name} restored ${nextHp - currentHp} heart${
+          nextHp - currentHp === 1 ? "" : "s"
         }.`,
       );
     } catch (error) {
@@ -119,7 +117,9 @@ export default function Inventory({
         </button>
       </header>
 
-      <p className="inventory-health">Health: {playerHearts}/{MAX_PLAYER_HEARTS}</p>
+      <p className="inventory-health">
+        Health: {currentHp}/{maxHp}
+      </p>
 
       {loading ? (
         <p className="inventory-status">Loading inventory...</p>
@@ -178,7 +178,7 @@ export default function Inventory({
                     onClick={handleUseItem}
                     disabled={!canHeal || usingItem}
                   >
-                    {playerHearts >= MAX_PLAYER_HEARTS
+                    {currentHp >= maxHp
                       ? "Health is already full"
                       : usingItem
                         ? "Using item..."

@@ -4,7 +4,8 @@ import "./EmptyDumpster.css";
 export default function EmptyDumpster({
   onGo = () => {},
   onRest = () => {},
-  playerHearts = 3,
+  currentHp = 3,
+  maxHp = 3,
 }) {
   const [restMessage, setRestMessage] = useState("");
 
@@ -50,7 +51,7 @@ export default function EmptyDumpster({
           from the busy streets.
         </p>
         <p role="status" aria-live="polite">
-          Health: {playerHearts}/3. {restMessage}
+          Health: {currentHp}/{maxHp}. {restMessage}
         </p>
       </section>
 
