@@ -278,8 +278,8 @@ function CityController({
 const INITIAL_PLAYER_STATS = {
   level: 1,
   xp: 0,
-  currentHp: 3,
-  maxHp: 3,
+  currentHp: 20,
+  maxHp: 20,
 };
 
 export default function App() {

@@ -109,47 +109,51 @@ h1 {
   font-weight: bold;
 }
 
-.heart-bar {
+.health-display {
+  width: 100%;
+  margin-top: 14px;
+}
+
+.health-label {
   display: flex;
-  justify-content: center;
-  gap: 12px;
-  min-height: 34px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+  color: #f8f1df;
+  font-size: 0.95rem;
 }
 
-.heart {
-  position: relative;
-  width: 24px;
-  height: 24px;
-  margin-top: 4px;
-  transform: rotate(-45deg);
-  background: #b91c1c;
+.health-label span {
+  color: #d9cdb8;
 }
 
-.heart::before,
-.heart::after {
-  content: "";
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  background: inherit;
-  border-radius: 50%;
+.health-label strong {
+  white-space: nowrap;
+  color: #f2c879;
 }
 
-.heart::before {
-  top: -12px;
-  left: 0;
-}
-
-.heart::after {
-  top: 0;
-  left: 12px;
-}
-
-.heart.empty {
+.health-track {
+  width: 100%;
+  height: 18px;
+  overflow: hidden;
   background: #342923;
-  outline: 1px solid rgba(242, 200, 121, 0.45);
+  border: 1px solid rgba(242, 200, 121, 0.45);
+  border-radius: 999px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45);
 }
 
+.health-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #3f7d4c, #69b578);
+  border-radius: inherit;
+  transition: width 0.25s ease;
+}
+
+.health-enemy .health-fill {
+  background: linear-gradient(90deg, #8f2525, #d14a3e);
+}
 .combat-log p {
   margin: 0;
   color: #e8ddc6;

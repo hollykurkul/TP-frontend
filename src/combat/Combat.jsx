@@ -12,20 +12,34 @@ function chooseEnemyIntent() {
   return Math.random() < 0.5 ? "attack" : "block";
 }
 
-function HeartBar({ current, label, max = DEFAULT_MAX_HP }) {
+function HealthBar({ currentHp, maxHp, label, variant = "player" }) {
+  const safeMaxHp = Math.max(1, Number(maxHp) || 1);
+  const safeCurrentHp = Math.max(
+    0,
+    Math.min(Number(currentHp) || 0, safeMaxHp),
+  );
+
+  const percentage = (safeCurrentHp / safeMaxHp) * 100;
+
   return (
-    <div
-      className="heart-bar"
-      role="img"
-      aria-label={`${label}: ${current} of ${max} hearts`}
-    >
-      {Array.from({ length: max }, (_, index) => (
-        <span
-          aria-hidden="true"
-          className={index < current ? "heart full" : "heart empty"}
-          key={index}
-        />
-      ))}
+    <div className={`health-display health-${variant}`}>
+      <div className="health-label">
+        <span>{label}</span>
+        <strong>
+          {safeCurrentHp}/{safeMaxHp} HP
+        </strong>
+      </div>
+
+      <div
+        className="health-track"
+        role="progressbar"
+        aria-label={`${label}: ${safeCurrentHp} of ${safeMaxHp} HP`}
+        aria-valuemin="0"
+        aria-valuemax={safeMaxHp}
+        aria-valuenow={safeCurrentHp}
+      >
+        <span className="health-fill" style={{ width: `${percentage}%` }} />
+      </div>
     </div>
   );
 }
@@ -185,10 +199,10 @@ export default function Combat({
             )}
           </div>
           <h2>{playerName}</h2>
-          <HeartBar
-            current={currentHp}
+          <HealthBar
+            currentHp={currentHp}
+            maxHp={maxHp}
             label={`${playerName} health`}
-            max={maxHp}
           />
         </article>
 
@@ -207,10 +221,11 @@ export default function Combat({
             )}
           </div>
           <h2>{enemyName}</h2>
-          <HeartBar
-            current={enemyHearts}
-            label="Enemy health"
-            max={enemyMaxHearts}
+          <HealthBar
+            currentHp={enemyHearts}
+            maxHp={enemyMaxHearts}
+            label={`${enemyName} health`}
+            variant="enemy"
           />
         </article>
       </section>
@@ -264,7 +279,11 @@ export default function Combat({
       </section>
 
       {inventoryOpen && (
-        <div className="combat-inventory-overlay" role="dialog" aria-modal="true">
+        <div
+          className="combat-inventory-overlay"
+          role="dialog"
+          aria-modal="true"
+        >
           <Inventory
             embedded
             onClose={() => setInventoryOpen(false)}
