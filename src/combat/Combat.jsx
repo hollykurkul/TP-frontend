@@ -6,13 +6,13 @@ import { useAuth } from "../auth/AuthContext.jsx";
 import Inventory from "../inventory/Inventory.jsx";
 import "./combat.css";
 
-const MAX_HEARTS = 3;
+const DEFAULT_MAX_HP = 3;
 
 function chooseEnemyIntent() {
   return Math.random() < 0.5 ? "attack" : "block";
 }
 
-function HeartBar({ current, label, max = MAX_HEARTS }) {
+function HeartBar({ current, label, max = DEFAULT_MAX_HP }) {
   return (
     <div
       className="heart-bar"
@@ -32,14 +32,15 @@ function HeartBar({ current, label, max = MAX_HEARTS }) {
 
 export default function Combat({
   character,
-  playerHearts = MAX_HEARTS,
-  onPlayerHeartsChange = () => {},
+  currentHp = DEFAULT_MAX_HP,
+  maxHp = DEFAULT_MAX_HP,
+  onHealthChange = () => {},
 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { token } = useAuth();
   const enemyName = location.state?.enemyName ?? "Wild Creature";
-  const enemyMaxHearts = location.state?.enemyMaxHearts ?? MAX_HEARTS;
+  const enemyMaxHearts = location.state?.enemyMaxHearts ?? DEFAULT_MAX_HP;
   const enemyImageUrl = location.state?.enemyImageUrl;
   const combatLocationId = Number(location.state?.locationId);
   const isBoss = Boolean(location.state?.isBoss);
@@ -54,7 +55,7 @@ export default function Combat({
   const [inventoryOpen, setInventoryOpen] = useState(false);
   const [dropPending, setDropPending] = useState(false);
 
-  const combatEnded = playerHearts === 0 || enemyHearts === 0;
+  const combatEnded = currentHp === 0 || enemyHearts === 0;
   const playerName =
     location.state?.playerName ?? character?.name ?? "Adventurer";
   const playerImage =
@@ -66,7 +67,7 @@ export default function Combat({
   async function takeTurn(playerAction) {
     if (combatEnded) return;
 
-    let nextPlayerHearts = playerHearts;
+    let nextCurrentHp = currentHp;
     let nextEnemyHearts = enemyHearts;
     const turnMessages = [];
 
@@ -121,17 +122,17 @@ export default function Combat({
       if (playerAction === "block") {
         turnMessages.push("You block the enemy's attack and take no damage.");
       } else {
-        nextPlayerHearts = Math.max(0, nextPlayerHearts - 1);
+        nextCurrentHp = Math.max(0, nextCurrentHp - 1);
         turnMessages.push("The enemy attacks and cuts your fur.");
       }
     } else if (playerAction === "block") {
       turnMessages.push("Both fighters block. No hearts are lost.");
     }
 
-    onPlayerHeartsChange(nextPlayerHearts);
+    onHealthChange(nextCurrentHp);
     setEnemyHearts(nextEnemyHearts);
 
-    if (nextPlayerHearts === 0) {
+    if (nextCurrentHp === 0) {
       setMessage(`${turnMessages.join(" ")} You were defeated.`);
       return;
     }
@@ -155,7 +156,7 @@ export default function Combat({
     const returnScene = location.state?.returnScene;
     const defeatScene = location.state?.defeatScene;
     const destinationScene =
-      playerHearts === 0 && defeatScene ? defeatScene : returnScene;
+      currentHp === 0 && defeatScene ? defeatScene : returnScene;
 
     navigate(returnTo, {
       replace: true,
@@ -184,7 +185,11 @@ export default function Combat({
             )}
           </div>
           <h2>{playerName}</h2>
-          <HeartBar current={playerHearts} label={`${playerName} health`} />
+          <HeartBar
+            current={currentHp}
+            label={`${playerName} health`}
+            max={maxHp}
+          />
         </article>
 
         <div className="versus">VS</div>
@@ -263,8 +268,9 @@ export default function Combat({
           <Inventory
             embedded
             onClose={() => setInventoryOpen(false)}
-            playerHearts={playerHearts}
-            onPlayerHeartsChange={onPlayerHeartsChange}
+            currentHp={currentHp}
+            maxHp={maxHp}
+            onHealthChange={onHealthChange}
           />
         </div>
       )}

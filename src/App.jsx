@@ -92,7 +92,8 @@ function ForestController({
   character,
   onStartCombat,
   onRest,
-  playerHearts,
+  currentHp,
+  maxHp,
   combatLoading,
   combatError,
 }) {
@@ -115,7 +116,8 @@ function ForestController({
           character={character}
           onGo={handleNavigation}
           onRest={onRest}
-          playerHearts={playerHearts}
+          currentHp={currentHp}
+          maxHp={maxHp}
         />
       )}
       {currentScene === "clearing" && (
@@ -153,7 +155,8 @@ function RoadController({
   character,
   onStartCombat,
   onRest,
-  playerHearts,
+  currentHp,
+  maxHp,
   combatLoading,
   combatError,
 }) {
@@ -203,7 +206,8 @@ function RoadController({
           character={character}
           onGo={handleNavigation}
           onRest={onRest}
-          playerHearts={playerHearts}
+          currentHp={currentHp}
+          maxHp={maxHp}
         />
       )}
     </div>
@@ -214,7 +218,8 @@ function CityController({
   character,
   onStartCombat,
   onRest,
-  playerHearts,
+  currentHp,
+  maxHp,
   combatLoading,
   combatError,
 }) {
@@ -237,7 +242,8 @@ function CityController({
           character={character}
           onGo={handleNavigation}
           onRest={onRest}
-          playerHearts={playerHearts}
+          currentHp={currentHp}
+          maxHp={maxHp}
         />
       )}
       {currentScene === "alleyWay" && (
@@ -269,12 +275,17 @@ function CityController({
   );
 }
 
-const MAX_PLAYER_HEARTS = 3;
+const INITIAL_PLAYER_STATS = {
+  level: 1,
+  xp: 0,
+  currentHp: 3,
+  maxHp: 3,
+};
 
 export default function App() {
   const { user } = useAuth();
   const [character, setCharacter] = useState(null);
-  const [playerHearts, setPlayerHearts] = useState(MAX_PLAYER_HEARTS);
+  const [playerStats, setPlayerStats] = useState(INITIAL_PLAYER_STATS);
   const [combatLoading, setCombatLoading] = useState(false);
   const [combatError, setCombatError] = useState("");
   const navigate = useNavigate();
@@ -285,7 +296,7 @@ export default function App() {
 
   const handleSelectCharacter = (selectedChar) => {
     setCharacter(selectedChar);
-    setPlayerHearts(MAX_PLAYER_HEARTS);
+    setPlayerStats(INITIAL_PLAYER_STATS);
     navigate("/prologue");
   };
 
@@ -324,8 +335,18 @@ export default function App() {
     }
   };
 
+  const handleHealthChange = (currentHp) => {
+    setPlayerStats((stats) => ({
+      ...stats,
+      currentHp: Math.max(0, Math.min(currentHp, stats.maxHp)),
+    }));
+  };
+
   const handleRest = () => {
-    setPlayerHearts(MAX_PLAYER_HEARTS);
+    setPlayerStats((stats) => ({
+      ...stats,
+      currentHp: stats.maxHp,
+    }));
   };
 
   return (
@@ -361,8 +382,9 @@ export default function App() {
           path="/inventory"
           element={
             <Inventory
-              playerHearts={playerHearts}
-              onPlayerHeartsChange={setPlayerHearts}
+              currentHp={playerStats.currentHp}
+              maxHp={playerStats.maxHp}
+              onHealthChange={handleHealthChange}
             />
           }
         />
@@ -371,8 +393,9 @@ export default function App() {
           element={
             <Combat
               character={character}
-              playerHearts={playerHearts}
-              onPlayerHeartsChange={setPlayerHearts}
+              currentHp={playerStats.currentHp}
+              maxHp={playerStats.maxHp}
+              onHealthChange={handleHealthChange}
             />
           }
         />
@@ -383,7 +406,8 @@ export default function App() {
               character={character}
               onStartCombat={handleStartCombat}
               onRest={handleRest}
-              playerHearts={playerHearts}
+              currentHp={playerStats.currentHp}
+              maxHp={playerStats.maxHp}
               combatLoading={combatLoading}
               combatError={combatError}
             />
@@ -396,7 +420,8 @@ export default function App() {
               character={character}
               onStartCombat={handleStartCombat}
               onRest={handleRest}
-              playerHearts={playerHearts}
+              currentHp={playerStats.currentHp}
+              maxHp={playerStats.maxHp}
               combatLoading={combatLoading}
               combatError={combatError}
             />
@@ -409,7 +434,8 @@ export default function App() {
               character={character}
               onStartCombat={handleStartCombat}
               onRest={handleRest}
-              playerHearts={playerHearts}
+              currentHp={playerStats.currentHp}
+              maxHp={playerStats.maxHp}
               combatLoading={combatLoading}
               combatError={combatError}
             />
