@@ -8,10 +8,18 @@ export default function EmptyDumpster({
   maxHp = 3,
 }) {
   const [restMessage, setRestMessage] = useState("");
+  const [sleeping, setSleeping] = useState(false);
 
   const handleRest = () => {
-    onRest();
-    setRestMessage("You curl up in the shelter and restore your HP.");
+    if (sleeping) return;
+
+    setSleeping(true);
+    setRestMessage("");
+    setTimeout(() => {
+      onRest();
+      setRestMessage("You curl up in the shelter and restore your HP.");
+      setSleeping(false);
+    }, 2200);
   };
 
   return (
@@ -39,6 +47,13 @@ export default function EmptyDumpster({
         <div className="fly fly-two" />
         <div className="puddle" />
         <div className="fog" />
+        {sleeping && (
+          <div className="emptydumpster-sleep-overlay">
+            <span className="emptydumpster-zzz emptydumpster-zzz-one">z</span>
+            <span className="emptydumpster-zzz emptydumpster-zzz-two">z</span>
+            <span className="emptydumpster-zzz emptydumpster-zzz-three">Z</span>
+          </div>
+        )}
       </div>
 
       <section className="emptydumpster-text">
@@ -60,14 +75,20 @@ export default function EmptyDumpster({
           type="button"
           className="emptydumpster-button"
           onClick={handleRest}
+          disabled={sleeping}
         >
-          {restMessage ? "HP restored" : "Curl up and rest (restore HP)"}
+          {sleeping
+            ? "Sleeping..."
+            : restMessage
+              ? "HP restored"
+              : "Curl up and rest (restore HP)"}
         </button>
 
         <button
           type="button"
           className="emptydumpster-button"
           onClick={() => onGo("cityPark")}
+          disabled={sleeping}
         >
           Climb back out and return to the park
         </button>

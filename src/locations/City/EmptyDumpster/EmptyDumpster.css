@@ -306,6 +306,62 @@
   height: 100px;
 }
 
+.emptydumpster-sleep-overlay {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  background: rgba(5, 6, 12, 0.62);
+  animation: emptydumpster-sleep-fade-in 0.6s ease;
+}
+
+.emptydumpster-zzz {
+  position: absolute;
+  bottom: 38%;
+  left: 52%;
+  color: #ffe2aa;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(255, 226, 170, 0.6);
+  animation: emptydumpster-zzz-rise 2.2s ease-out infinite;
+}
+
+.emptydumpster-zzz-one {
+  font-size: 18px;
+}
+
+.emptydumpster-zzz-two {
+  font-size: 24px;
+  animation-delay: 0.4s;
+}
+
+.emptydumpster-zzz-three {
+  font-size: 32px;
+  animation-delay: 0.8s;
+}
+
+@keyframes emptydumpster-zzz-rise {
+  from {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    transform: translate(36px, -70px);
+    opacity: 0;
+  }
+}
+
+@keyframes emptydumpster-sleep-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .emptydumpster-text {
   margin-top: 20px;
 }
@@ -352,12 +408,17 @@
     transform 0.15s;
 }
 
-.emptydumpster-button:hover,
-.emptydumpster-button:focus-visible {
+.emptydumpster-button:hover:not(:disabled),
+.emptydumpster-button:focus-visible:not(:disabled) {
   background: #dfd4bc;
   transform: translateX(4px);
 }
 
 .emptydumpster-button:active {
   transform: translateX(2px) scale(0.99);
+}
+
+.emptydumpster-button:disabled {
+  cursor: default;
+  opacity: 0.65;
 }
