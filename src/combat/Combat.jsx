@@ -13,6 +13,8 @@ function chooseEnemyIntent() {
 }
 const BASE_HIT_TARGET = 10;
 const BLOCK_HIT_BONUS = 5;
+const BASE_DAMAGE_DIE = 4;
+const BOSS_DAMAGE_DIE = 6;
 
 function rollD20() {
   return Math.floor(Math.random() * 20) + 1;
@@ -28,6 +30,33 @@ function rollToHit(attackBonus = 0, hitTarget = BASE_HIT_TARGET) {
     hit: total >= hitTarget,
   };
 }
+
+function rollDamage(dieSides = BASE_DAMAGE_DIE, damageBonus = 0) {
+  const safeDieSides = Math.max(
+    1,
+    Math.floor(Number(dieSides) || BASE_DAMAGE_DIE),
+  );
+  const numericBonus = Number(damageBonus);
+  const safeBonus = Number.isFinite(numericBonus)
+    ? Math.trunc(numericBonus)
+    : 0;
+  const naturalRoll = Math.floor(Math.random() * safeDieSides) + 1;
+
+  return {
+    naturalRoll,
+    bonus: safeBonus,
+    dieSides: safeDieSides,
+    total: Math.max(0, naturalRoll + safeBonus),
+  };
+}
+
+function formatDamageRoll({ naturalRoll, bonus, dieSides, total }) {
+  const modifier =
+    bonus === 0 ? "" : bonus > 0 ? ` + ${bonus}` : ` - ${Math.abs(bonus)}`;
+
+  return `${total} HP damage (1d${dieSides}${modifier}; die rolled ${naturalRoll})`;
+}
+
 function HealthBar({ currentHp, maxHp, label, variant = "player" }) {
   const safeMaxHp = Math.max(1, Number(maxHp) || 1);
   const safeCurrentHp = Math.max(
@@ -65,6 +94,7 @@ export default function Combat({
   currentHp = DEFAULT_MAX_HP,
   maxHp = DEFAULT_MAX_HP,
   onHealthChange = () => {},
+  weaponDamageBonus = 0,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -110,23 +140,22 @@ export default function Combat({
       if (!playerRoll.hit) {
         if (enemyIsBlocking) {
           turnMessages.push(
-            `You rolled ${playerRoll.total} against a target of ${playerHitTarget}. The enemy blocks your attack.`,
+            `You try to strike your foe, but the enemy blocks your attack.`,
           );
         } else {
-          turnMessages.push(
-            `You rolled ${playerRoll.total} against a target of ${playerHitTarget} and missed.`,
-          );
+          turnMessages.push(`You try to strike your foe, but miss.`);
         }
       } else {
-        nextEnemyHearts = Math.max(0, nextEnemyHearts - 1);
+        const playerDamage = rollDamage(BASE_DAMAGE_DIE, weaponDamageBonus);
+        nextEnemyHearts = Math.max(0, nextEnemyHearts - playerDamage.total);
 
         if (enemyIsBlocking) {
           turnMessages.push(
-            `You rolled ${playerRoll.total} against a target of ${playerHitTarget}. The enemy tries to block, but you get past their guard.`,
+            `You leap at your foe, and the enemy tries to block, but you get past their guard, dealing ${formatDamageRoll(playerDamage)}.`,
           );
         } else {
           turnMessages.push(
-            `You rolled ${playerRoll.total} and hit the enemy for 1 HP.`,
+            `You strike your foe, dealing ${formatDamageRoll(playerDamage)}.`,
           );
         }
       }
@@ -170,23 +199,24 @@ export default function Combat({
       if (!enemyRoll.hit) {
         if (playerIsBlocking) {
           turnMessages.push(
-            `The enemy rolled ${enemyRoll.total} against a target of ${enemyHitTarget}. You block the attack.`,
+            `The enemy tries to attack, but you block the blow.`,
           );
         } else {
-          turnMessages.push(
-            `The enemy rolled ${enemyRoll.total} against a target of ${enemyHitTarget} and missed you.`,
-          );
+          turnMessages.push(`The enemy tries to attack, but misses you.`);
         }
       } else {
-        nextCurrentHp = Math.max(0, nextCurrentHp - 1);
+        const enemyDamage = rollDamage(
+          isBoss ? BOSS_DAMAGE_DIE : BASE_DAMAGE_DIE,
+        );
+        nextCurrentHp = Math.max(0, nextCurrentHp - enemyDamage.total);
 
         if (playerIsBlocking) {
           turnMessages.push(
-            `The enemy rolled ${enemyRoll.total} against a target of ${enemyHitTarget} and got past your guard. You lose 1 HP.`,
+            `You try to block your foe's attack, but they get past your guard, dealing ${formatDamageRoll(enemyDamage)}.`,
           );
         } else {
           turnMessages.push(
-            `The enemy rolled ${enemyRoll.total} and hit you for 1 HP.`,
+            `The enemy strikes you, dealing ${formatDamageRoll(enemyDamage)}.`,
           );
         }
       }
