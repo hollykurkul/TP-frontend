@@ -8,10 +8,18 @@ export default function RestStop({
   maxHp = 3,
 }) {
   const [restMessage, setRestMessage] = useState("");
+  const [sleeping, setSleeping] = useState(false);
 
   const handleRest = () => {
-    onRest();
-    setRestMessage("You curled up and restored your HP.");
+    if (sleeping) return;
+
+    setSleeping(true);
+    setRestMessage("");
+    setTimeout(() => {
+      onRest();
+      setRestMessage("You curled up and restored your HP.");
+      setSleeping(false);
+    }, 2200);
   };
 
   return (
@@ -32,6 +40,13 @@ export default function RestStop({
           <span className="vend-glow" />
         </div>
         <div className="trash-can" />
+        {sleeping && (
+          <div className="reststop-sleep-overlay">
+            <span className="reststop-zzz reststop-zzz-one">z</span>
+            <span className="reststop-zzz reststop-zzz-two">z</span>
+            <span className="reststop-zzz reststop-zzz-three">Z</span>
+          </div>
+        )}
       </div>
 
       <section className="reststop-text">
@@ -47,14 +62,20 @@ export default function RestStop({
       </section>
 
       <section className="reststop-choices">
-        <button type="button" className="reststop-button" onClick={handleRest}>
-          Curl up and rest (restore HP)
+        <button
+          type="button"
+          className="reststop-button"
+          onClick={handleRest}
+          disabled={sleeping}
+        >
+          {sleeping ? "Sleeping..." : "Curl up and rest (restore HP)"}
         </button>
 
         <button
           type="button"
           className="reststop-button"
           onClick={() => onGo("busStop")}
+          disabled={sleeping}
         >
           Return to the bus stop
         </button>

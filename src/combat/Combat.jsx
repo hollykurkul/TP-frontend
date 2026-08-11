@@ -11,7 +11,23 @@ const DEFAULT_MAX_HP = 3;
 function chooseEnemyIntent() {
   return Math.random() < 0.5 ? "attack" : "block";
 }
+const BASE_HIT_TARGET = 10;
+const BLOCK_HIT_BONUS = 5;
 
+function rollD20() {
+  return Math.floor(Math.random() * 20) + 1;
+}
+
+function rollToHit(attackBonus = 0, hitTarget = BASE_HIT_TARGET) {
+  const naturalRoll = rollD20();
+  const total = naturalRoll + attackBonus;
+
+  return {
+    naturalRoll,
+    total,
+    hit: total >= hitTarget,
+  };
+}
 function HealthBar({ currentHp, maxHp, label, variant = "player" }) {
   const safeMaxHp = Math.max(1, Number(maxHp) || 1);
   const safeCurrentHp = Math.max(
@@ -86,20 +102,33 @@ export default function Combat({
     const turnMessages = [];
 
     if (playerAction === "attack") {
-      if (enemyIntent === "block") {
-        const blockSucceeded = Math.random() < 0.5;
+      const enemyIsBlocking = enemyIntent === "block";
+      const playerHitTarget =
+        BASE_HIT_TARGET + (enemyIsBlocking ? BLOCK_HIT_BONUS : 0);
+      const playerRoll = rollToHit(0, playerHitTarget);
 
-        if (blockSucceeded) {
-          turnMessages.push("The enemy blocks your attack.");
-        } else {
-          nextEnemyHearts = Math.max(0, nextEnemyHearts - 1);
+      if (!playerRoll.hit) {
+        if (enemyIsBlocking) {
           turnMessages.push(
-            "The enemy tries to block, but you get past their guard.",
+            `You rolled ${playerRoll.total} against a target of ${playerHitTarget}. The enemy blocks your attack.`,
+          );
+        } else {
+          turnMessages.push(
+            `You rolled ${playerRoll.total} against a target of ${playerHitTarget} and missed.`,
           );
         }
       } else {
         nextEnemyHearts = Math.max(0, nextEnemyHearts - 1);
-        turnMessages.push("Your slash damages the enemy.");
+
+        if (enemyIsBlocking) {
+          turnMessages.push(
+            `You rolled ${playerRoll.total} against a target of ${playerHitTarget}. The enemy tries to block, but you get past their guard.`,
+          );
+        } else {
+          turnMessages.push(
+            `You rolled ${playerRoll.total} and hit the enemy for 1 HP.`,
+          );
+        }
       }
     }
 
@@ -133,14 +162,36 @@ export default function Combat({
     }
 
     if (enemyIntent === "attack") {
-      if (playerAction === "block") {
-        turnMessages.push("You block the enemy's attack and take no damage.");
+      const playerIsBlocking = playerAction === "block";
+      const enemyHitTarget =
+        BASE_HIT_TARGET + (playerIsBlocking ? BLOCK_HIT_BONUS : 0);
+      const enemyRoll = rollToHit(0, enemyHitTarget);
+
+      if (!enemyRoll.hit) {
+        if (playerIsBlocking) {
+          turnMessages.push(
+            `The enemy rolled ${enemyRoll.total} against a target of ${enemyHitTarget}. You block the attack.`,
+          );
+        } else {
+          turnMessages.push(
+            `The enemy rolled ${enemyRoll.total} against a target of ${enemyHitTarget} and missed you.`,
+          );
+        }
       } else {
         nextCurrentHp = Math.max(0, nextCurrentHp - 1);
-        turnMessages.push("The enemy attacks and cuts your fur.");
+
+        if (playerIsBlocking) {
+          turnMessages.push(
+            `The enemy rolled ${enemyRoll.total} against a target of ${enemyHitTarget} and got past your guard. You lose 1 HP.`,
+          );
+        } else {
+          turnMessages.push(
+            `The enemy rolled ${enemyRoll.total} and hit you for 1 HP.`,
+          );
+        }
       }
     } else if (playerAction === "block") {
-      turnMessages.push("Both fighters block. No hearts are lost.");
+      turnMessages.push("Both fighters block. No HP is lost.");
     }
 
     onHealthChange(nextCurrentHp);
