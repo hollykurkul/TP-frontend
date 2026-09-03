@@ -26,7 +26,7 @@ function MainMenu({ user, onStartNewGame }) {
     <main className="menu-page">
       <section className="title-section">
         <p className="eyebrow">A text adventure</p>
-        <h1>The Pawdessey</h1>
+        <h1>The Pawdyssey</h1>
         <p className="subtitle">
           Follow the pawprints into a strange, storybook wilderness.
         </p>
@@ -286,6 +286,7 @@ export default function App() {
   const { user } = useAuth();
   const [character, setCharacter] = useState(null);
   const [playerStats, setPlayerStats] = useState(INITIAL_PLAYER_STATS);
+  const [equippedWeapon, setEquippedWeapon] = useState(null);
   const [combatLoading, setCombatLoading] = useState(false);
   const [combatError, setCombatError] = useState("");
   const navigate = useNavigate();
@@ -297,6 +298,7 @@ export default function App() {
   const handleSelectCharacter = (selectedChar) => {
     setCharacter(selectedChar);
     setPlayerStats(INITIAL_PLAYER_STATS);
+    setEquippedWeapon(null);
     navigate("/prologue");
   };
 
@@ -385,6 +387,8 @@ export default function App() {
               currentHp={playerStats.currentHp}
               maxHp={playerStats.maxHp}
               onHealthChange={handleHealthChange}
+              equippedWeapon={equippedWeapon}
+              onEquipWeapon={setEquippedWeapon}
             />
           }
         />
@@ -396,6 +400,8 @@ export default function App() {
               currentHp={playerStats.currentHp}
               maxHp={playerStats.maxHp}
               onHealthChange={handleHealthChange}
+              equippedWeapon={equippedWeapon}
+              onEquipWeapon={setEquippedWeapon}
             />
           }
         />
