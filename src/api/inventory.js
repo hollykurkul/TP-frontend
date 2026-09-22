@@ -28,12 +28,17 @@ function normalizeItem(item) {
     canEquip: Boolean(item.can_equip ?? item.canEquip),
     canUse: Boolean(item.can_use ?? item.canUse),
     locationId: Number(item.location_id ?? item.locationId),
+    quantity: Math.max(1, Number(item.quantity) || 1),
   };
 }
 
 export async function getInventory(token) {
   const items = await inventoryRequest("/", token);
   return items.map(normalizeItem);
+}
+
+export async function clearInventory(token) {
+  return inventoryRequest("/", token, { method: "DELETE" });
 }
 
 export async function rollForItemDrop(locationId, token) {
@@ -56,5 +61,6 @@ export async function consumeHealingItem(itemId, token) {
   return {
     item: normalizeItem(result.item),
     healingAmount: Number(result.healingAmount),
+    remainingQuantity: Number(result.remainingQuantity),
   };
 }

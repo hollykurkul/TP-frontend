@@ -7,6 +7,7 @@ import CharacterSelect from "./characterSelect/characterSelect.jsx";
 import Combat from "./combat/Combat.jsx";
 import Inventory from "./inventory/Inventory.jsx";
 import { getBossByLocation, getRandomEnemyByLocation } from "./api/enemies.js";
+import { clearInventory } from "./api/inventory.js";
 import Pond from "./locations/Forest/Pond/Pond.jsx";
 import Den from "./locations/Forest/Den/Den.jsx";
 import Clearing from "./locations/Forest/Clearing/Clearing.jsx";
@@ -21,7 +22,12 @@ import AlleyWay from "./locations/City/Alleyway/Alleyway.jsx";
 
 import { useAuth } from "./auth/AuthContext";
 
-function MainMenu({ user, onStartNewGame }) {
+function MainMenu({
+  user,
+  onStartNewGame,
+  newGamePending = false,
+  newGameError = "",
+}) {
   return (
     <main className="menu-page">
       <section className="title-section">
@@ -58,9 +64,11 @@ function MainMenu({ user, onStartNewGame }) {
                 type="button"
                 className="menu-button"
                 onClick={onStartNewGame}
+                disabled={newGamePending}
               >
-                Start New Game
+                {newGamePending ? "Starting New Game..." : "Start New Game"}
               </button>
+              {newGameError && <p role="alert">{newGameError}</p>}
             </section>
 
             <section className="menu-panel action-panel">
@@ -283,16 +291,37 @@ const INITIAL_PLAYER_STATS = {
 };
 
 export default function App() {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [character, setCharacter] = useState(null);
   const [playerStats, setPlayerStats] = useState(INITIAL_PLAYER_STATS);
   const [equippedWeapon, setEquippedWeapon] = useState(null);
   const [combatLoading, setCombatLoading] = useState(false);
   const [combatError, setCombatError] = useState("");
+  const [newGamePending, setNewGamePending] = useState(false);
+  const [newGameError, setNewGameError] = useState("");
   const navigate = useNavigate();
 
-  const handleStartNewGame = () => {
-    navigate("/character-select");
+  const handleStartNewGame = async () => {
+    if (!token || newGamePending) return;
+
+    setNewGamePending(true);
+    setNewGameError("");
+
+    try {
+      await clearInventory(token);
+      setCharacter(null);
+      setPlayerStats(INITIAL_PLAYER_STATS);
+      setEquippedWeapon(null);
+      navigate("/character-select");
+    } catch (error) {
+      setNewGameError(
+        error instanceof Error
+          ? error.message
+          : "Unable to start a new game.",
+      );
+    } finally {
+      setNewGamePending(false);
+    }
   };
 
   const handleSelectCharacter = (selectedChar) => {
@@ -324,7 +353,7 @@ export default function App() {
           playerName: character?.name,
           playerImageUrl:
             character?.image ?? character?.imageUrl ?? character?.image_url,
-          enemyMaxHearts: enemy.hp,
+          enemyMaxHp: enemy.hp,
           enemyImageUrl: enemy.imageUrl,
         },
       });
@@ -356,7 +385,14 @@ export default function App() {
       <Route element={<Layout />}>
         <Route
           index
-          element={<MainMenu user={user} onStartNewGame={handleStartNewGame} />}
+          element={
+            <MainMenu
+              user={user}
+              onStartNewGame={handleStartNewGame}
+              newGamePending={newGamePending}
+              newGameError={newGameError}
+            />
+          }
         />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

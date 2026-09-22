@@ -20,6 +20,8 @@ export default function Inventory({
   currentHp = DEFAULT_MAX_HP,
   maxHp = DEFAULT_MAX_HP,
   onHealthChange = () => {},
+  equippedWeapon = null,
+  onEquipWeapon = () => {},
 }) {
   const navigate = useNavigate();
   const { token } = useAuth();
@@ -28,7 +30,7 @@ export default function Inventory({
   const [loading, setLoading] = useState(true);
   const [usingItem, setUsingItem] = useState(false);
   const [message, setMessage] = useState("");
-  const [equippedWeaponId, setEquippedWeaponId] = useState(null);
+  const equippedWeaponId = equippedWeapon?.id ?? null;
 
   useEffect(() => {
     let active = true;
@@ -70,6 +72,10 @@ export default function Inventory({
     () => items.find((item) => item.id === selectedItemId) ?? null,
     [items, selectedItemId],
   );
+  const totalItemCount = useMemo(
+    () => items.reduce((total, item) => total + item.quantity, 0),
+    [items],
+  );
   const healingAmount = getHealingAmount(selectedItem);
   const canHeal =
     selectedItem?.canUse && healingAmount > 0 && currentHp < maxHp;
@@ -83,15 +89,22 @@ export default function Inventory({
     try {
       const result = await consumeHealingItem(selectedItem.id, token);
       const nextHp = Math.min(maxHp, currentHp + result.healingAmount);
-      const remainingItems = items.filter(
-        (item) => item.id !== selectedItem.id,
-      );
+      const remainingItems =
+        result.remainingQuantity > 0
+          ? items.map((item) =>
+              item.id === selectedItem.id
+                ? { ...item, quantity: result.remainingQuantity }
+                : item,
+            )
+          : items.filter((item) => item.id !== selectedItem.id);
 
       onHealthChange(nextHp);
       setItems(remainingItems);
-      setSelectedItemId(remainingItems[0]?.id ?? null);
+      if (result.remainingQuantity === 0) {
+        setSelectedItemId(remainingItems[0]?.id ?? null);
+      }
       setMessage(
-        `${result.item.name} restored ${nextHp - currentHp} HP.`,
+        `${result.item.name} restored ${nextHp - currentHp} HP. ${result.remainingQuantity} remaining.`,
       );
     } catch (error) {
       setMessage(
@@ -106,7 +119,7 @@ export default function Inventory({
     if (!selectedItem?.canEquip) return;
 
     const equipping = equippedWeaponId !== selectedItem.id;
-    setEquippedWeaponId(equipping ? selectedItem.id : null);
+    onEquipWeapon(equipping ? selectedItem : null);
     setMessage(
       `${selectedItem.name} ${equipping ? "equipped" : "unequipped"}.`,
     );
@@ -145,7 +158,7 @@ export default function Inventory({
           >
             <div className="inventory-panel-heading">
               <h2>Items</h2>
-              <span>{items.length} owned</span>
+              <span>{totalItemCount} owned</span>
             </div>
 
             {items.length === 0 ? (
@@ -163,7 +176,9 @@ export default function Inventory({
                     key={item.id}
                     onClick={() => setSelectedItemId(item.id)}
                   >
-                    <span className="inventory-item-name">{item.name}</span>
+                    <span className="inventory-item-name">
+                      {item.name} ×{item.quantity}
+                    </span>
                     <span>
                       {item.type} · Area {item.locationId}
                       {equippedWeaponId === item.id ? " · Equipped" : ""}
@@ -189,6 +204,7 @@ export default function Inventory({
                 </div>
                 <p className="inventory-item-type">{selectedItem.type}</p>
                 <h2>{selectedItem.name}</h2>
+                <p>Quantity: {selectedItem.quantity}/5</p>
                 <p>{selectedItem.description}</p>
                 <p className="inventory-effect">
                   Effect: {selectedItem.effect}

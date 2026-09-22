@@ -3,8 +3,6 @@ const saveId = params.get("saveId");
 
 const playerName = document.getElementById("playerName");
 const enemyName = document.getElementById("enemyName");
-const playerHearts = document.getElementById("playerHearts");
-const enemyHearts = document.getElementById("enemyHearts");
 const combatMessage = document.getElementById("combatMessage");
 const attackButton = document.getElementById("attackButton");
 const blockButton = document.getElementById("blockButton");
@@ -16,16 +14,6 @@ const enemyAvatarLabel = document.getElementById("enemyAvatarLabel");
 
 function setCombatMessage(message) {
   combatMessage.textContent = message;
-}
-
-function renderHearts(container, current = 3, max = 3) {
-  container.innerHTML = "";
-
-  for (let i = 1; i <= max; i += 1) {
-    const heart = document.createElement("span");
-    heart.className = i <= current ? "heart full" : "heart empty";
-    container.appendChild(heart);
-  }
 }
 
 function renderAvatar(imageElement, labelElement, url) {
@@ -52,17 +40,6 @@ function renderCombatState(data) {
   renderAvatar(playerAvatar, playerAvatarLabel, player.avatarUrl);
   renderAvatar(enemyAvatar, enemyAvatarLabel, enemy.avatarUrl);
 
-  renderHearts(
-    playerHearts,
-    player.healthPoints ?? data.healthPoints ?? 3,
-    player.maxHealthPoints ?? 3,
-  );
-  renderHearts(
-    enemyHearts,
-    enemy.healthPoints ?? 3,
-    enemy.maxHealthPoints ?? 3,
-  );
-
   if (data.message) {
     setCombatMessage(data.message);
   }
@@ -76,8 +53,6 @@ async function loadCombat() {
     attackButton.disabled = true;
     blockButton.disabled = true;
     fleeButton.disabled = true;
-    renderHearts(playerHearts, 3, 3);
-    renderHearts(enemyHearts, 3, 3);
     return;
   }
 

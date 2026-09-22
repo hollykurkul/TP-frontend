@@ -31,6 +31,24 @@ function rollToHit(attackBonus = 0, hitTarget = BASE_HIT_TARGET) {
   };
 }
 
+function getWeaponDamage(weapon) {
+  const match = /^1d(\d+)(?:\s*\+\s*(\d+))?\s+damage$/i.exec(
+    String(weapon?.effect ?? "").trim(),
+  );
+
+  if (!match) {
+    return {
+      dieSides: BASE_DAMAGE_DIE,
+      bonus: 0,
+    };
+  }
+
+  return {
+    dieSides: Number(match[1]),
+    bonus: Number(match[2] ?? 0),
+  };
+}
+
 function rollDamage(dieSides = BASE_DAMAGE_DIE, damageBonus = 0) {
   const safeDieSides = Math.max(
     1,
@@ -94,20 +112,22 @@ export default function Combat({
   currentHp = DEFAULT_MAX_HP,
   maxHp = DEFAULT_MAX_HP,
   onHealthChange = () => {},
+  equippedWeapon = null,
+  onEquipWeapon = () => {},
   weaponDamageBonus = 0,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { token } = useAuth();
   const enemyName = location.state?.enemyName ?? "Wild Creature";
-  const enemyMaxHearts = location.state?.enemyMaxHearts ?? DEFAULT_MAX_HP;
+  const enemyMaxHp = location.state?.enemyMaxHp ?? DEFAULT_MAX_HP;
   const enemyImageUrl = location.state?.enemyImageUrl;
   const combatLocationId = Number(location.state?.locationId);
   const isBoss = Boolean(location.state?.isBoss);
   const victoryTo = location.state?.victoryTo;
   const victoryScene = location.state?.victoryScene;
 
-  const [enemyHearts, setEnemyHearts] = useState(enemyMaxHearts);
+  const [enemyHp, setEnemyHp] = useState(enemyMaxHp);
   const [enemyIntent, setEnemyIntent] = useState(chooseEnemyIntent);
   const [message, setMessage] = useState(
     "The creature watches you carefully. Choose your move.",
@@ -115,7 +135,7 @@ export default function Combat({
   const [inventoryOpen, setInventoryOpen] = useState(false);
   const [dropPending, setDropPending] = useState(false);
 
-  const combatEnded = currentHp === 0 || enemyHearts === 0;
+  const combatEnded = currentHp === 0 || enemyHp === 0;
   const playerName =
     location.state?.playerName ?? character?.name ?? "Adventurer";
   const playerImage =
@@ -123,12 +143,13 @@ export default function Combat({
     character?.image ??
     character?.imageUrl ??
     character?.image_url;
+  const equippedWeaponDamage = getWeaponDamage(equippedWeapon);
 
   async function takeTurn(playerAction) {
     if (combatEnded) return;
 
     let nextCurrentHp = currentHp;
-    let nextEnemyHearts = enemyHearts;
+    let nextEnemyHp = enemyHp;
     const turnMessages = [];
 
     if (playerAction === "attack") {
@@ -146,8 +167,11 @@ export default function Combat({
           turnMessages.push(`You try to strike your foe, but miss.`);
         }
       } else {
-        const playerDamage = rollDamage(BASE_DAMAGE_DIE, weaponDamageBonus);
-        nextEnemyHearts = Math.max(0, nextEnemyHearts - playerDamage.total);
+        const playerDamage = rollDamage(
+          equippedWeaponDamage.dieSides,
+          equippedWeaponDamage.bonus + weaponDamageBonus,
+        );
+        nextEnemyHp = Math.max(0, nextEnemyHp - playerDamage.total);
 
         if (enemyIsBlocking) {
           turnMessages.push(
@@ -161,9 +185,9 @@ export default function Combat({
       }
     }
 
-    if (nextEnemyHearts === 0) {
+    if (nextEnemyHp === 0) {
       const victoryMessage = `${turnMessages.join(" ")} You won the fight!`;
-      setEnemyHearts(0);
+      setEnemyHp(0);
       setMessage(victoryMessage);
 
       if (!token || !Number.isInteger(combatLocationId)) return;
@@ -225,7 +249,7 @@ export default function Combat({
     }
 
     onHealthChange(nextCurrentHp);
-    setEnemyHearts(nextEnemyHearts);
+    setEnemyHp(nextEnemyHp);
 
     if (nextCurrentHp === 0) {
       setMessage(`${turnMessages.join(" ")} You were defeated.`);
@@ -239,7 +263,7 @@ export default function Combat({
   }
 
   function exitCombat() {
-    if (enemyHearts === 0 && isBoss && victoryTo) {
+    if (enemyHp === 0 && isBoss && victoryTo) {
       navigate(victoryTo, {
         replace: true,
         state: victoryScene ? { scene: victoryScene } : undefined,
@@ -303,8 +327,8 @@ export default function Combat({
           </div>
           <h2>{enemyName}</h2>
           <HealthBar
-            currentHp={enemyHearts}
-            maxHp={enemyMaxHearts}
+            currentHp={enemyHp}
+            maxHp={enemyMaxHp}
             label={`${enemyName} health`}
             variant="enemy"
           />
@@ -351,7 +375,7 @@ export default function Combat({
         >
           {dropPending
             ? "Checking for loot..."
-            : enemyHearts === 0
+            : enemyHp === 0
               ? isBoss && victoryTo
                 ? "Proceed"
                 : "Return"
@@ -371,6 +395,8 @@ export default function Combat({
             currentHp={currentHp}
             maxHp={maxHp}
             onHealthChange={onHealthChange}
+            equippedWeapon={equippedWeapon}
+            onEquipWeapon={onEquipWeapon}
           />
         </div>
       )}
